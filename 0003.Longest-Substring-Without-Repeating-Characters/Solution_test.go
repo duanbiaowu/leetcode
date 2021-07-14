@@ -28,6 +28,11 @@ func Test_lengthOfLongestSubstring(t *testing.T) {
 		},
 		{
 			"test a string that contains multiple duplicate characters",
+			args{"abba"},
+			2,
+		},
+		{
+			"test a string that contains multiple duplicate characters",
 			args{"abcabcbb"},
 			3,
 		},
