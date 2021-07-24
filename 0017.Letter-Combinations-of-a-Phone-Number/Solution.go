@@ -11,7 +11,6 @@ var letterArray = []string{
 	"wxyz", //9
 }
 
-// backtrack
 func backtrackLetterCombinations(digits string) []string {
 	if len(digits) == 0 {
 		return []string{}
@@ -58,5 +57,28 @@ func dfsLetterCombinations(digits string) []string {
 			res = append(res, c1+c2)
 		}
 	}
+	return res
+}
+
+func bfsLetterCombinations(digits string) []string {
+	if len(digits) == 0 {
+		return []string{}
+	}
+
+	res := letterMap[digits[0]]
+	index := 1
+	var queue []string
+	for index < len(digits) {
+		for _, c1 := range res {
+			for _, c2 := range letterMap[digits[index]] {
+				queue = append(queue, c1+c2)
+			}
+		}
+		res = queue
+
+		queue = []string{}
+		index++
+	}
+
 	return res
 }
