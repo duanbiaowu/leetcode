@@ -11,25 +11,25 @@ var letterMap = []string{
 	"wxyz", //9
 }
 
-// DFS
-func letterCombinations(digits string) []string {
+// backtrack
+func backtrackLetterCombinations(digits string) []string {
 	if len(digits) == 0 {
 		return []string{}
 	}
 
 	var res []string
 	var str string
-	dfs(digits, &res, str, 0)
+	backtrack(digits, &res, str, 0)
 	return res
 }
 
-func dfs(digits string, res *[]string, str string, start int) {
+func backtrack(digits string, res *[]string, str string, start int) {
 	if start == len(digits) {
 		*res = append(*res, str)
 	} else {
 		strMap := letterMap[digits[start]-'2']
 		for i := 0; i < len(strMap); i++ {
-			dfs(digits, res, str+string(strMap[i]), start+1)
+			backtrack(digits, res, str+string(strMap[i]), start+1)
 		}
 	}
 }
