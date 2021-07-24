@@ -52,3 +52,13 @@ func Test_backtrackLetterCombinations(t *testing.T) {
 		})
 	}
 }
+
+func Test_dfsLetterCombinations(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := dfsLetterCombinations(tt.args.digits); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("dfsLetterCombinations() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
