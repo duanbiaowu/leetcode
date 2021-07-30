@@ -30,13 +30,14 @@ func getLength(head *ListNode) int {
 //	return dump.Next
 //}
 
+// fast-slow pointer solution
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	if n <= 0 {
 		return head
 	}
 
-	dump := &ListNode{0, head}
-	fast, slow := head, dump
+	dummy := &ListNode{0, head}
+	fast, slow := head, dummy
 	for i := 0; i < n && fast != nil; i++ {
 		fast = fast.Next
 	}
@@ -47,5 +48,24 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	}
 	slow.Next = slow.Next.Next
 
-	return dump.Next
+	return dummy.Next
+}
+
+// recursive solution
+func removeNthFromEndRecursively(head *ListNode, n int) *ListNode {
+	counter := 0
+	return removeNthFromEndRecursivelyInternal(head, n, &counter)
+}
+
+func removeNthFromEndRecursivelyInternal(head *ListNode, n int, counter *int) *ListNode {
+	if n <= 0 || head == nil {
+		return head
+	}
+
+	head.Next = removeNthFromEndRecursivelyInternal(head.Next, n, counter)
+	*counter++
+	if n == *counter {
+		return head.Next
+	}
+	return head
 }
