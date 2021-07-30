@@ -20,6 +20,21 @@ func Test_mergeKLists(t *testing.T) {
 			nil,
 		},
 		{
+			"test-1.1",
+			args{[]*ListNode{
+				nil,
+			}},
+			nil,
+		},
+		{
+			"test-1.2",
+			args{[]*ListNode{
+				nil,
+				nil,
+			}},
+			nil,
+		},
+		{
 			"test-2",
 			args{[]*ListNode{
 				{0, nil},

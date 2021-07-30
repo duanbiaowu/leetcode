@@ -31,6 +31,35 @@ func merge(lists []*ListNode, left, right int) *ListNode {
 	return mergeTwoLists(merge(lists, left, mid), merge(lists, mid+1, right))
 }
 
+// priority-queue solution
+//func mergeKLists(lists []*ListNode) *ListNode {
+//	if len(lists) == 0 {
+//		return nil
+//	}
+//
+//	pq := make(ListNodeQueue, len(lists))
+//	for i, node := range lists {
+//		pq[i] = node
+//	}
+//
+//	heap.Init(&pq)
+//	dummy := &ListNode{0, nil}
+//	cur := dummy
+//
+//	for pq.Len() > 0 {
+//		next := heap.Pop(&pq).(*ListNode)
+//		if next != nil {
+//			cur.Next = next
+//			cur = cur.Next
+//			if next.Next != nil {
+//				heap.Push(&pq, next.Next)
+//			}
+//		}
+//	}
+//
+//	return dummy.Next
+//}
+
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	if l1 == nil {
 		return l2
