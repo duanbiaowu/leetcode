@@ -1,7 +1,7 @@
 package leetcode
 
 // simple solution
-func isValidSudoku(board [][]byte) bool {
+func isValidSudokuSimply(board [][]byte) bool {
 	for i := 0; i < 9; i++ {
 		tmp := [10]int{}
 		for j := 0; j < 9; j++ {
@@ -47,6 +47,29 @@ func isValidSudoku(board [][]byte) bool {
 						tmp[index] = 1
 					}
 				}
+			}
+		}
+	}
+
+	return true
+}
+
+// hashMap solution
+func isValidSudoku(board [][]byte) bool {
+	// 分别缓存行、列、3×3宫格
+	rows, cols, boxes := [9][9]bool{}, [9][9]bool{}, [9][9]bool{}
+	for i := 0; i < 9; i++ {
+		for j := 0; j < 9; j++ {
+			if board[i][j] != '.' {
+				num := board[i][j] - '1'
+				// 确定是第几个3*3的小区域
+				index := i/3*3 + j/3
+				if rows[i][num] || cols[j][num] || boxes[index][num] {
+					return false
+				}
+				rows[i][num] = true
+				cols[j][num] = true
+				boxes[index][num] = true
 			}
 		}
 	}
