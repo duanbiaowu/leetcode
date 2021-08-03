@@ -17,3 +17,14 @@ func removeElements(head *ListNode, val int) *ListNode {
 
 	return dummy.Next
 }
+
+func removeElementsRecursively(head *ListNode, val int) *ListNode {
+	if head == nil {
+		return head
+	}
+	head.Next = removeElementsRecursively(head.Next, val)
+	if head.Val == val {
+		return head.Next
+	}
+	return head
+}
