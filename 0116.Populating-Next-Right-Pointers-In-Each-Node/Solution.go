@@ -25,3 +25,20 @@ func connect(root *Node) *Node {
 
 	return root
 }
+
+func connectIteratively(root *Node) *Node {
+	if root == nil {
+		return root
+	}
+
+	for left := root; left.Left != nil; left = left.Left {
+		for cur := left; cur != nil; cur = cur.Next {
+			cur.Left.Next = cur.Right
+			if cur.Next != nil {
+				cur.Right.Next = cur.Next.Left
+			}
+		}
+	}
+
+	return root
+}
