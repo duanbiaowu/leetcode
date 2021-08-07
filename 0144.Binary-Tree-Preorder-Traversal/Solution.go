@@ -6,7 +6,7 @@ type TreeNode = structures.TreeNode
 
 func preorderTraversal(root *TreeNode) []int {
 	var res []int
-	traversalRecursively(root, &res)
+	preorderTraversalRecursively(root, &res)
 	return res
 }
 
@@ -27,10 +27,10 @@ func preorderTraversalIteratively(root *TreeNode) []int {
 	return res
 }
 
-func traversalRecursively(root *TreeNode, res *[]int) {
+func preorderTraversalRecursively(root *TreeNode, res *[]int) {
 	if root != nil {
 		*res = append(*res, root.Val)
-		traversalRecursively(root.Left, res)
-		traversalRecursively(root.Right, res)
+		preorderTraversalRecursively(root.Left, res)
+		preorderTraversalRecursively(root.Right, res)
 	}
 }
