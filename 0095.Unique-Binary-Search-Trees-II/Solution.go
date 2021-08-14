@@ -16,10 +16,14 @@ func backtrack(start, end int) []*TreeNode {
 	if start > end {
 		return []*TreeNode{nil}
 	}
+
 	var res []*TreeNode
+	// 枚举可行根节点
+	// 左子树的所有值小于根节点，右子树的所有值大于根节点
 	for i := start; i <= end; i++ {
 		leftTress := backtrack(start, i-1)
 		rightTress := backtrack(i+1, end)
+		// 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
 		for left := range leftTress {
 			for right := range rightTress {
 				res = append(res, &TreeNode{
