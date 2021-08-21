@@ -36,3 +36,32 @@ func levelOrderBottom(root *TreeNode) [][]int {
 
 	return res
 }
+
+func levelOrderBottomDFS(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	var res [][]int
+	p := 0
+	dfs(root, 0, &res, &p)
+
+	for left, right := 0, len(res)-1; left < right; {
+		res[left], res[right] = res[right], res[left]
+		left++
+		right--
+	}
+	return res
+}
+
+func dfs(root *TreeNode, depth int, res *[][]int, p *int) {
+	if root == nil {
+		return
+	}
+	if depth >= len(*res) {
+		*res = append(*res, []int{})
+	}
+	(*res)[depth] = append((*res)[depth], root.Val)
+	dfs(root.Left, depth+1, res, p)
+	dfs(root.Right, depth+1, res, p)
+}
