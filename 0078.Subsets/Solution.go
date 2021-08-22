@@ -27,3 +27,19 @@ func subsets(nums []int) [][]int {
 	}
 	return res
 }
+
+func subsetsRecursively(nums []int) [][]int {
+	var path []int
+	var res [][]int
+	backtrack(nums, 0, &path, &res)
+	return res
+}
+
+func backtrack(nums []int, begin int, path *[]int, res *[][]int) {
+	*res = append(*res, append([]int{}, *path...))
+	for i := begin; i < len(nums); i++ {
+		*path = append(*path, nums[i])
+		backtrack(nums, i+1, path, res)
+		*path = (*path)[:len(*path)-1]
+	}
+}
