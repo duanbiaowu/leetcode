@@ -25,3 +25,55 @@ func dfs(root *TreeNode, path *[]int, sum int, res *[][]int) {
 	dfs(root.Right, path, sum-root.Val, res)
 	*path = (*path)[:len(*path)-1]
 }
+
+func pathSumBFS(root *TreeNode, targetSum int) [][]int {
+	if root == nil {
+		return nil
+	}
+
+	type pair struct {
+		node *TreeNode
+		sum  int
+	}
+
+	var res [][]int
+	var parent = map[*TreeNode]*TreeNode{}
+	var queue []pair
+	queue = append(queue, pair{root, 0})
+
+	for len(queue) > 0 {
+		top := queue[0]
+		queue = queue[1:]
+
+		node := top.node
+		sum := top.sum + node.Val
+		if node.Left == nil && node.Right == nil {
+			if sum == targetSum {
+				res = append(res, getPath(parent, node))
+			}
+		} else {
+			if node.Left != nil {
+				parent[node.Left] = node
+				queue = append(queue, pair{node.Left, sum})
+			}
+			if node.Right != nil {
+				parent[node.Right] = node
+				queue = append(queue, pair{node.Right, sum})
+			}
+		}
+	}
+
+	return res
+}
+
+func getPath(parent map[*TreeNode]*TreeNode, node *TreeNode) []int {
+	var path []int
+	for ; node != nil; node = parent[node] {
+		path = append(path, node.Val)
+	}
+
+	for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
+		path[i], path[j] = path[j], path[i]
+	}
+	return path
+}
