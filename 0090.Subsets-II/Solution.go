@@ -61,3 +61,24 @@ func backtrack(nums []int, begin int, path *[]int, res *[][]int) {
 		*path = (*path)[:len(*path)-1]
 	}
 }
+
+func subsetsIteratively(nums []int) [][]int {
+	var res [][]int
+	sort.Ints(nums)
+
+	res = append(res, []int{})
+	left, right := 0, 1
+	for i := 0; i < len(nums); i++ {
+		if i > 0 && nums[i] == nums[i-1] {
+			left = len(res) - right - left
+		} else {
+			left = 0
+		}
+		right = len(res)
+		for j := left; j < right; j++ {
+			res = append(res, append(res[j], nums[i]))
+		}
+	}
+
+	return res
+}
