@@ -36,6 +36,30 @@ func rob2(nums []int) int {
 	return second
 }
 
+func rob3(nums []int) int {
+	n := len(nums)
+	memo := make([]int, n) // 记忆化: 避免重复计算
+	for i := 0; i < n; i++ {
+		memo[i] = -1
+	}
+	return robRecursively(nums, 0, &memo)
+}
+
+func robRecursively(nums []int, begin int, memo *[]int) int {
+	if begin >= len(nums) {
+		return 0
+	}
+	if (*memo)[begin] != -1 {
+		return (*memo)[begin]
+	}
+	res := 0
+	for i := begin; i < len(nums); i++ {
+		res = max(res, nums[i]+robRecursively(nums, i+2, memo))
+	}
+
+	return res
+}
+
 func max(x, y int) int {
 	if x > y {
 		return x
