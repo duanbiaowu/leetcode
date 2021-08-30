@@ -27,6 +27,9 @@ func (this *BSTIterator) HasNext() bool {
 	return len(this.Stack) > 0
 }
 
+// LeftMostInOrder
+// 二叉搜索树的中序遍历序列是单调递增的
+// 利用二叉树的迭代方式的中序遍历，保存左子链，从而使用O(h)的内存
 func (this *BSTIterator) LeftMostInOrder(root *TreeNode) {
 	for root != nil {
 		this.Stack = append(this.Stack, root)
