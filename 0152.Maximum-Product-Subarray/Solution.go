@@ -37,3 +37,35 @@ func maxProduct(nums []int) int {
 
 	return res
 }
+
+func maxProductDP(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	maxF, minF, res := nums[0], nums[0], nums[0]
+	for i := 1; i < len(nums); i++ {
+		// 反转很巧妙
+		if nums[i] < 0 {
+			maxF, minF = minF, maxF
+		}
+		maxF = max(nums[i], maxF*nums[i])
+		minF = min(nums[i], minF*nums[i])
+		res = max(res, maxF)
+	}
+	return res
+}
+
+func max(x int, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
+func min(x int, y int) int {
+	if x > y {
+		return y
+	}
+	return x
+}
