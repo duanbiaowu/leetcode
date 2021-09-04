@@ -14,7 +14,7 @@ func (this *MinStack) Push(val int) {
 	if len(this.stack) == 0 {
 		this.stack = append(this.stack, [2]int{val, val})
 	} else {
-		this.stack = append(this.stack, [2]int{val, min(val, this.Top())})
+		this.stack = append(this.stack, [2]int{val, min(val, this.GetMin())})
 	}
 }
 
