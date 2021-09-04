@@ -6,8 +6,10 @@ func findMin(nums []int) int {
 		mid := low + (hi-low)>>1
 		if nums[mid] < nums[hi] {
 			hi = mid
-		} else {
+		} else if nums[mid] > nums[hi] {
 			low = mid + 1
+		} else {
+			hi--
 		}
 	}
 	return nums[low]
