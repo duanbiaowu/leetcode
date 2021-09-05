@@ -52,3 +52,50 @@ func sort(head, tail *ListNode) *ListNode {
 func sortList(head *ListNode) *ListNode {
 	return sort(head, nil)
 }
+
+func sortListIteratively(head *ListNode) *ListNode {
+	if head == nil {
+		return head
+	}
+
+	length := 0
+	for cur := head; cur != nil; cur = cur.Next {
+		length++
+	}
+
+	dummy := &ListNode{Next: head}
+	for step := 1; step < length; step <<= 1 {
+		prev, cur := dummy, dummy.Next
+		for cur != nil {
+			// 需要合并的链表块左边起始位置
+			head1 := cur
+			for i := 1; i < step && cur.Next != nil; i++ {
+				cur = cur.Next
+			}
+
+			// 需要合并的链表块右边起始位置
+			head2 := cur.Next
+			cur.Next = nil
+			cur = head2
+			for i := 1; i < step && cur != nil && cur.Next != nil; i++ {
+				cur = cur.Next
+			}
+
+			// 需要合并的下一个链表块起始位置
+			var next *ListNode
+			if cur != nil {
+				next = cur.Next
+				cur.Next = nil
+			}
+
+			prev.Next = merge(head1, head2)
+			// 合并后链表指针前进
+			for prev.Next != nil {
+				prev = prev.Next
+			}
+			cur = next
+		}
+	}
+
+	return dummy.Next
+}
