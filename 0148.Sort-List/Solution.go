@@ -99,3 +99,45 @@ func sortListIteratively(head *ListNode) *ListNode {
 
 	return dummy.Next
 }
+
+// https://leetcode-cn.com/problems/sort-list/solution/sort-list-gui-bing-pai-xu-lian-biao-by-jyd/1082575
+func quickSort(head, tail *ListNode) {
+	// 注意: head 为 dummyNode
+	if head == tail || head.Next == tail || head.Next.Next == tail {
+		return
+	}
+
+	// 第一个节点为基准
+	pivot := head.Next
+	// 建立临时链表
+	dummy := &ListNode{}
+	left, right := dummy, pivot
+
+	for right.Next != tail {
+		// 如果当前元素小于基准，就加入临时链表，并在原链表中删除
+		if right.Next.Val < pivot.Val {
+			left.Next = right.Next
+			left = left.Next
+			right.Next = right.Next.Next
+		} else {
+			// 不小于基准，指针右移
+			right = right.Next
+		}
+	}
+
+	// 已排序链表接在原链表前面
+	left.Next = head.Next
+	head.Next = dummy.Next
+	quickSort(head, pivot)
+	quickSort(pivot, tail)
+}
+
+func quickSortList(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	dummy := &ListNode{Next: head}
+	quickSort(dummy, nil)
+	return dummy.Next
+}
