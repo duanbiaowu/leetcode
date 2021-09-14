@@ -1,5 +1,7 @@
 package leetcode
 
+// 只能选择 某一天 买入这只股票
+// 并选择在 未来的某一个不同的日子 卖出该股票
 func maxProfit2(prices []int) int {
 	if len(prices) == 0 {
 		return 0
