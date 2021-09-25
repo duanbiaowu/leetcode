@@ -7,7 +7,7 @@ type Node struct {
 	Next  *Node
 }
 
-func connect(root *Node) *Node {
+func connectBFS(root *Node) *Node {
 	if root == nil {
 		return nil
 	}
@@ -34,7 +34,7 @@ func connect(root *Node) *Node {
 
 // 没有 BFS 层级方法直观好理解
 // 需要注意 子树==nil 的情况
-func connect2(root *Node) *Node {
+func connectIteratively(root *Node) *Node {
 	var left, prev *Node
 	var handle func(root *Node)
 	handle = func(root *Node) {
@@ -61,4 +61,41 @@ func connect2(root *Node) *Node {
 	}
 
 	return root
+}
+
+// 递归版本
+func connect(root *Node) *Node {
+	if root == nil {
+		return root
+	}
+	if root.Left != nil && root.Right != nil {
+		root.Left.Next = root.Right
+	}
+	if root.Left != nil && root.Right == nil {
+		root.Left.Next = getNext(root.Next)
+	}
+	if root.Right != nil {
+		root.Right.Next = getNext(root.Next)
+	}
+
+	connect(root.Right)
+	connect(root.Left)
+
+	return root
+}
+
+func getNext(root *Node) *Node {
+	if root == nil {
+		return root
+	}
+	if root.Left != nil {
+		return root.Left
+	}
+	if root.Right != nil {
+		return root.Right
+	}
+	if root.Next != nil {
+		return getNext(root.Next)
+	}
+	return nil
 }
