@@ -27,6 +27,11 @@ func Test_search(t *testing.T) {
 			args{[]int{2, 5, 6, 0, 0, 1, 2}, 3},
 			false,
 		},
+		{
+			"test-4",
+			args{[]int{1, 0, 1, 1, 1}, 0},
+			true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
