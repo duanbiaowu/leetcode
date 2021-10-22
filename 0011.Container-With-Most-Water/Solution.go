@@ -2,7 +2,7 @@ package leetcode
 
 func maxArea(height []int) int {
 	left, right := 0, len(height)-1
-	max := 0
+	res := 0
 
 	for left < right {
 		width := right - left
@@ -14,12 +14,15 @@ func maxArea(height []int) int {
 			moreHeight = height[right]
 			right--
 		}
-
-		tmp := moreHeight * width
-		if tmp > max {
-			max = tmp
-		}
-
+		res = max(res, width*moreHeight)
 	}
-	return max
+	
+	return res
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
 }
