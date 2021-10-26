@@ -11,16 +11,16 @@ func Test_firstMissingPositive(t *testing.T) {
 		args args
 		want int
 	}{
-		//{
-		//	"test-1",
-		//	args{[]int{}},
-		//	1,
-		//},
-		//{
-		//	"test-2",
-		//	args{[]int{1, 2, 0}},
-		//	3,
-		//},
+		{
+			"test-1",
+			args{[]int{}},
+			1,
+		},
+		{
+			"test-2",
+			args{[]int{1, 2, 0}},
+			3,
+		},
 		{
 			"test-3",
 			args{[]int{3, 4, -1, 1}},
