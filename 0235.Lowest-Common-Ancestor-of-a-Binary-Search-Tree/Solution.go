@@ -6,6 +6,7 @@ import (
 
 type TreeNode = structures.TreeNode
 
+// 限定为搜索二叉树
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	if root == nil || p == nil || q == nil {
 		return nil
