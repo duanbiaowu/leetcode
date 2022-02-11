@@ -9,7 +9,7 @@ func isBalanced(root *TreeNode) bool {
 	//if root == nil {
 	//	return true
 	//}
-	//return abs(heightT2B(root.Left)-heightT2B(root.Right)) <= 1
+	//return abs(heightT2B(root.Left) - heightT2B(root.Right)) <= 1 && isBalanced(root.Left) && isBalanced(root.Right)
 }
 
 // 自顶向下递归: 对于同一个节点, 会重复计算
