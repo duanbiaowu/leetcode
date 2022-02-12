@@ -19,8 +19,7 @@ func backtrack(S []byte, begin int, res *[]string) {
 }
 
 func permutation2(S string) []string {
-	// 字符串长度在[1, 9]之间
-	var visited = make([]bool, 10)
+	var visited = make([]bool, len(S))
 	var path []byte
 	var res []string
 	backtrack2(S, path, &visited, &res)
