@@ -48,6 +48,29 @@ func trap2(height []int) int {
 	return res
 }
 
+// 总体积减去柱子体积就是水的容量
+// reference: https://leetcode-cn.com/problems/volume-of-histogram-lcci/solution/shuang-zhi-zhen-an-xing-qiu-jie-xiang-xi-d162/
+func trap3(height []int) int {
+	sum := 0
+	for i := range height {
+		sum += height[i]
+	}
+	volume := 0
+	level := 1
+	left, right := 0, len(height)-1
+	for left <= right {
+		for left <= right && height[left] < level {
+			left++
+		}
+		for left <= right && height[right] < level {
+			right--
+		}
+		volume += right - left + 1
+		level++
+	}
+	return volume - sum
+}
+
 func min(x, y int) int {
 	if x < y {
 		return x
