@@ -7,7 +7,7 @@ func getMaxMatrix(matrix [][]int) []int {
 	}
 	n := len(matrix[0])
 	max := matrix[0][0]
-	res := []int{-1, -1, -1, -1}
+	res := []int{0, 0, 0, 0}
 
 	// 构造列的前缀和
 	preSum := make([][]int, m+1)
