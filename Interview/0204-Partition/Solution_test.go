@@ -29,7 +29,12 @@ func Test_partition(t *testing.T) {
 		{
 			"test-3",
 			args{structures.GenerateListNodesByArray([]int{1, 4, 3, 2, 5, 2}), 3},
-			structures.GenerateListNodesByArray([]int{1, 2, 2, 4, 3, 5}),
+			structures.GenerateListNodesByArray([]int{1, 2, 2, 4, 5, 3}),
+		},
+		{
+			"test-4",
+			args{structures.GenerateListNodesByArray([]int{1, 4, 30, 20, 5, 2}), 10},
+			structures.GenerateListNodesByArray([]int{1, 4, 5, 2, 30, 20}),
 		},
 	}
 	for _, tt := range tests {
