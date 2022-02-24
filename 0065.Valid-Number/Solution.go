@@ -2,7 +2,20 @@ package leetcode
 
 func isNumber(s string) bool {
 	numFlag, dotFlag, eFlag := false, false, false
-	for i := 0; i < len(s); i++ {
+	// 去除首尾空格
+	i, j := 0, len(s)-1
+	for i < j && s[i] == ' ' {
+		i++
+	}
+	for j > i && s[j] == ' ' {
+		j--
+	}
+	if i > j {
+		return false
+	}
+	s = s[i : j+1]
+
+	for i = range s {
 		if '0' <= s[i] && s[i] <= '9' {
 			numFlag = true
 		} else if s[i] == '.' && !dotFlag && !eFlag {
