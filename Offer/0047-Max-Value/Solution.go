@@ -14,6 +14,7 @@ func maxValue(grid [][]int) int {
 		return 0
 	}
 
+	// 滚动数组: 理解为什么长度是 n+1
 	dp := make([]int, n+1)
 	for i := 1; i <= m; i++ {
 		for j := 1; j <= n; j++ {
