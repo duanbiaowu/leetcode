@@ -51,7 +51,6 @@ func Test_myAtoi(t *testing.T) {
 			-42,
 		},
 
-
 		{
 			"test a string with a leading symbol that a digit",
 			args{"4193 with words"},
@@ -73,7 +72,6 @@ func Test_myAtoi(t *testing.T) {
 			args{"-2147483647"},
 			-2147483647,
 		},
-
 
 		{
 			"No1. test a positive integer that overflow after converting",
