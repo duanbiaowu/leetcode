@@ -3,7 +3,7 @@ package leetcode
 func maxSlidingWindow(nums []int, k int) []int {
 	n := len(nums)
 	if n == 0 || k == 0 || n-k < -1 {
-		return []int{0}
+		return []int{}
 	}
 
 	// 滑动窗口对应的数据结构为 双端队列

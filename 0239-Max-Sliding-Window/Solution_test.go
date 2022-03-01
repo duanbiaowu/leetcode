@@ -18,15 +18,20 @@ func Test_maxSlidingWindow(t *testing.T) {
 		{
 			"test-1",
 			args{nil, 1},
-			[]int{0},
+			[]int{},
 		},
 		{
 			"test-2",
 			args{[]int{1}, 0},
-			[]int{0},
+			[]int{},
 		},
 		{
 			"test-3",
+			args{[]int{}, 0},
+			[]int{},
+		},
+		{
+			"test-4",
 			args{[]int{1, 3, -1, -3, 5, 3, 6, 7}, 3},
 			[]int{3, 3, 5, 5, 6, 7},
 		},
