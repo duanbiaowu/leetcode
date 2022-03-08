@@ -28,7 +28,7 @@ func Test_canFinish(t *testing.T) {
 			true,
 		},
 		{
-			"test-2",
+			"test-3",
 			args{6, [][]int{
 				{3, 0},
 				{3, 1},
