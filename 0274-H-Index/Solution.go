@@ -13,7 +13,7 @@ func hIndex(citations []int) int {
 	for low < hi {
 		mid := low + (hi-low)>>1
 		if citations[mid] < n-mid {
-			low += 1
+			low = mid + 1
 		} else {
 			hi = mid
 		}
