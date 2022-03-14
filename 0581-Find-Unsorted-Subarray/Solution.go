@@ -19,11 +19,11 @@ func findUnsortedSubarray(nums []int) int {
 
 		// 从右到左维持最小值，寻找左边界
 		if nums[n-i-1] > min {
-			left = n - i -1
+			left = n - i - 1
 		} else {
 			min = nums[n-i-1]
 		}
 	}
 
-	return right-left+1
+	return right - left + 1
 }
