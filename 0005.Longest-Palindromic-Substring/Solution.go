@@ -42,8 +42,35 @@ package leetcode
 //	return s[start : end+1]
 //}
 
-// DP
 func longestPalindrome(s string) string {
+	if len(s) <= 1 {
+		return s
+	}
+
+	left, right := 0, 0
+	for i := range s {
+		// 返回两个变量（起始位置和结束位置）比单个变量（总长度）可读性更好
+		cnt1 := expandAroundCenterCount(s, i, i)
+		cnt2 := expandAroundCenterCount(s, i, i+1)
+		cnt := max(cnt1, cnt2)
+		if cnt > right-left {
+			left = i - (cnt-1)>>1
+			right = i + cnt>>1
+		}
+	}
+	return s[left : right+1]
+}
+
+func expandAroundCenterCount(s string, left, right int) int {
+	for left >= 0 && right < len(s) && s[left] == s[right] {
+		left--
+		right++
+	}
+	return right - left - 1
+}
+
+// DP
+func longestPalindrome2(s string) string {
 	if len(s) <= 1 {
 		return s
 	}
