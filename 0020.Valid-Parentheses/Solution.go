@@ -11,7 +11,8 @@ func isValid(s string) bool {
 		'{': '}',
 		'[': ']',
 	}
-	stack := []byte{}
+	var stack []byte
+
 	for i := 0; i < n; i++ {
 		if _, ok := charMap[s[i]]; ok {
 			stack = append(stack, s[i])
