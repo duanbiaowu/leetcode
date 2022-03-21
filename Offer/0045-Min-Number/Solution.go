@@ -6,37 +6,37 @@ import (
 )
 
 func minNumber(nums []int) string {
-	strs := make([]string, len(nums))
+	s := make([]string, len(nums))
 	for i := range nums {
-		strs[i] = strconv.Itoa(nums[i])
+		s[i] = strconv.Itoa(nums[i])
 	}
-	quickSort(strs, 0, len(strs)-1)
+	quickSort(s, 0, len(s)-1)
 
-	var sb strings.Builder
-	for i := range strs {
-		sb.WriteString(strs[i])
-	}
-	return sb.String()
+	return strings.Join(s, "")
 }
 
-func quickSort(strs []string, left, right int) {
-	if left >= right {
-		return
+func quickSort(s []string, left, right int) {
+	if left < right {
+		p := partition(s, left, right)
+		quickSort(s, left, p-1)
+		quickSort(s, p+1, right)
 	}
+}
 
-	pivot := strs[right]
+func partition(s []string, left, right int) int {
+	pivot := s[right]
 	i, j := left, right
+
 	for i < j {
-		for i < j && strs[i]+pivot <= pivot+strs[i] {
+		for i < j && s[i]+pivot <= pivot+s[i] {
 			i++
 		}
-		for i < j && strs[j]+pivot >= pivot+strs[j] {
+		for i < j && s[j]+pivot >= pivot+s[j] {
 			j--
 		}
-		strs[i], strs[j] = strs[j], strs[i]
+		s[i], s[j] = s[j], s[i]
 	}
-	strs[i], strs[right] = strs[right], strs[i]
 
-	quickSort(strs, left, i-1)
-	quickSort(strs, i+1, right)
+	s[i], s[right] = s[right], s[i]
+	return i
 }
