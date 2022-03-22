@@ -14,15 +14,22 @@ func combinationSum(candidates []int, target int) [][]int {
 	return res
 }
 
-func backtrack(nums []int, target, begin int, path *[]int, res *[][]int) {
+func backtrack(candidates []int, target, begin int, path *[]int, res *[][]int) {
 	if target == 0 {
 		*res = append(*res, append([]int{}, *path...))
 		return
 	}
 
-	for i := begin; i < len(nums) && nums[i] <= target; i++ {
-		*path = append(*path, nums[i])
-		backtrack(nums, target-nums[i], i, path, res)
+	for i := begin; i < len(candidates); i++ {
+		// 剪枝 (前提：已排序)
+		if candidates[i] > target {
+			return
+		}
+
+		*path = append(*path, candidates[i])
+		// candidates 中的 同一个 数字可以 无限制重复被选取
+		// i 作为起点，查找 target-candidates[i]
+		backtrack(candidates, target-candidates[i], i, path, res)
 		*path = (*path)[:len(*path)-1]
 	}
 }
