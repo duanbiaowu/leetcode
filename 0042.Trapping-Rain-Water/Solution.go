@@ -6,6 +6,8 @@ func trap(height []int) int {
 	left, right := 0, len(height)-1
 	maxLeft, maxRight := 0, 0
 
+	// 如果右端有更高的高度，积水的高度依赖于当前方向的高度（从左到右）
+	// 如果左侧有更高的高度，从相反的方向（从右到左）
 	for left <= right {
 		if height[left] <= height[right] {
 			if height[left] > maxLeft {
@@ -31,7 +33,7 @@ func trap(height []int) int {
 func trap2(height []int) int {
 	res := 0
 	var stack []int
-	for i := 0; i < len(height); i++ {
+	for i := range height {
 		for len(stack) > 0 && height[i] > height[stack[len(stack)-1]] {
 			top := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
