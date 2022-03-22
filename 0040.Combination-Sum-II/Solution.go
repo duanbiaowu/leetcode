@@ -21,9 +21,13 @@ func backtrack(candidates []int, target, begin int, path *[]int, res *[][]int) {
 
 	for i := begin; i < len(candidates); i++ {
 		if candidates[i] <= target {
+			// 数字去重
 			if i > begin && candidates[i] == candidates[i-1] {
 				continue
 			}
+			// candidates 中的 同一个 数字不可以重复
+			// i + 1 作为起点，查找 target-candidates[i]
+			// 和 39 题最主要的差异点
 			*path = append(*path, candidates[i])
 			backtrack(candidates, target-candidates[i], i+1, path, res)
 			*path = (*path)[:len(*path)-1]
