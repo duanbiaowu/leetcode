@@ -48,6 +48,27 @@ func Test_merge(t *testing.T) {
 				{1, 5},
 			},
 		},
+		{
+			"test-5",
+			args{[][]int{
+				{1, 4},
+				{1, 4},
+			}},
+			[][]int{
+				{1, 4},
+			},
+		},
+		{
+			"test-6",
+			args{[][]int{
+				{4, 5},
+				{1, 4},
+				{0, 1},
+			}},
+			[][]int{
+				{0, 5},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
