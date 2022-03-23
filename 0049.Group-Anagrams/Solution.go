@@ -34,19 +34,19 @@ func groupAnagrams(strs []string) [][]string {
 }
 
 func groupAnagrams2(strs []string) [][]string {
-	m := map[string][]string{}
-	for i := 0; i < len(strs); i++ {
+	m := make(map[string][]string)
+	for i := range strs {
 		s := []byte(strs[i])
 		sort.Slice(s, func(i, j int) bool {
 			return s[i] < s[j]
 		})
-		sortedS := string(s)
-		m[sortedS] = append(m[sortedS], strs[i])
+		key := string(s)
+		m[key] = append(m[key], strs[i])
 	}
 
 	res := make([][]string, 0, len(m))
-	for _, v := range m {
-		res = append(res, v)
+	for i := range m {
+		res = append(res, m[i])
 	}
 	return res
 }
