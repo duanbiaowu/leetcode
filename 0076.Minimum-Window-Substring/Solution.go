@@ -1,26 +1,28 @@
 package leetcode
 
-import "math"
-
 func minWindow(s string, t string) string {
-	if len(s) == 0 || len(t) == 0 {
+	m, n := len(s), len(t)
+	if m == 0 || n == 0 {
 		return ""
 	}
 
 	need := [128]int{}
-	for i := 0; i < len(t); i++ {
+	for i := 0; i < n; i++ {
 		need[t[i]]++
 	}
 
-	count, start, size := len(t), 0, math.MaxInt32
+	cnt := n
+	// m 设定为一个不可能的值
+	start, size := 0, m+1
+	left, right := 0, 0
 
-	for left, right := 0, 0; right < len(s); right++ {
+	for right < m {
 		if need[s[right]] > 0 {
-			count--
+			cnt--
 		}
 		need[s[right]]--
 
-		if count == 0 {
+		if cnt == 0 {
 			for left < right && need[s[left]] < 0 {
 				need[s[left]]++
 				left++
@@ -33,11 +35,13 @@ func minWindow(s string, t string) string {
 
 			need[s[left]]++
 			left++
-			count++
+			cnt++
 		}
+
+		right++
 	}
 
-	if size == math.MaxInt32 {
+	if size == m+1 {
 		return ""
 	}
 	return s[start : start+size]
