@@ -2,12 +2,21 @@ package leetcode
 
 import "github.com/duanbiaowu/leetcode/structures"
 
+// TreeNode Definition for a binary tree node.
 type TreeNode = structures.TreeNode
 
 func inorderTraversal(root *TreeNode) []int {
 	var res []int
-	inorderTraversalRecursively(root, &res)
+	helper(root, &res)
 	return res
+}
+
+func helper(root *TreeNode, res *[]int) {
+	if root != nil {
+		helper(root.Left, res)
+		*res = append(*res, root.Val)
+		helper(root.Right, res)
+	}
 }
 
 func inorderTraversalIteratively(root *TreeNode) []int {
@@ -26,12 +35,4 @@ func inorderTraversalIteratively(root *TreeNode) []int {
 	}
 
 	return res
-}
-
-func inorderTraversalRecursively(root *TreeNode, res *[]int) {
-	if root != nil {
-		inorderTraversalRecursively(root.Left, res)
-		*res = append(*res, root.Val)
-		inorderTraversalRecursively(root.Right, res)
-	}
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/duanbiaowu/leetcode/structures"
 )
 
+// TreeNode Definition for a binary tree node.
 type TreeNode = structures.TreeNode
 
 func maxDepth(root *TreeNode) int {
@@ -28,24 +29,22 @@ func bfs(root *TreeNode) int {
 
 	var queue []*TreeNode
 	queue = append(queue, root)
-	res := 0
+	depth := 0
 
-	for len(queue) > 0 {
-		for size := len(queue); size > 0; size-- {
-			node := queue[0]
-			queue = queue[1:]
-
-			if node.Left != nil {
-				queue = append(queue, node.Left)
+	for n := len(queue); n > 0; n = len(queue) {
+		depth++
+		for i := 0; i < n; i++ {
+			if queue[i].Left != nil {
+				queue = append(queue, queue[i].Left)
 			}
-			if node.Right != nil {
-				queue = append(queue, node.Right)
+			if queue[i].Right != nil {
+				queue = append(queue, queue[i].Right)
 			}
 		}
-		res++
+		queue = queue[n:]
 	}
 
-	return res
+	return depth
 }
 
 func max(a, b int) int {
