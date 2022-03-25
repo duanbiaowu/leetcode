@@ -1,25 +1,28 @@
 package leetcode
 
+// 单调栈解决类似问题：对数组中每一个元素找到第一个比自己小的元素
 func largestRectangleArea(heights []int) int {
 	n := len(heights)
+	// left[0...n] 	各元素左边界: 左边第一个比自己小的数
+	// right[0...n] 各元素右边界: 右边第一个比自己小的数
 	left, right := make([]int, n), make([]int, n)
 	for i := 0; i < n; i++ {
 		right[i] = n
 	}
 
-	var monoStack []int
+	var stack []int
 	for i := 0; i < n; i++ {
-		for len(monoStack) > 0 && heights[monoStack[len(monoStack)-1]] >= heights[i] {
-			right[monoStack[len(monoStack)-1]] = i
-			monoStack = monoStack[:len(monoStack)-1]
+		for len(stack) > 0 && heights[stack[len(stack)-1]] >= heights[i] {
+			right[stack[len(stack)-1]] = i
+			stack = stack[:len(stack)-1]
 		}
 
-		if len(monoStack) == 0 {
+		if len(stack) == 0 {
 			left[i] = -1
 		} else {
-			left[i] = monoStack[len(monoStack)-1]
+			left[i] = stack[len(stack)-1]
 		}
-		monoStack = append(monoStack, i)
+		stack = append(stack, i)
 	}
 
 	res := 0
