@@ -1,9 +1,9 @@
 package leetcode
 
 import (
-	"github.com/duanbiaowu/leetcode/structures"
-	"math"
 	"testing"
+
+	"github.com/duanbiaowu/leetcode/structures"
 )
 
 func Test_maxPathSum(t *testing.T) {
@@ -18,7 +18,7 @@ func Test_maxPathSum(t *testing.T) {
 		{
 			"test-1",
 			args{nil},
-			math.MinInt32,
+			0,
 		},
 		{
 			"test-2",

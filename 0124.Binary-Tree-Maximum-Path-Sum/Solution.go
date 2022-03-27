@@ -1,20 +1,26 @@
 package leetcode
 
 import (
-	"github.com/duanbiaowu/leetcode/structures"
 	"math"
+
+	"github.com/duanbiaowu/leetcode/structures"
 )
 
+// TreeNode Definition for a binary tree node.
 type TreeNode = structures.TreeNode
 
 func maxPathSum(root *TreeNode) int {
-	maxSum := math.MinInt32
+	if root == nil {
+		return 0
+	}
 
-	var dfs func(root *TreeNode) int
+	maxSum := math.MinInt32
+	var dfs func(*TreeNode) int
 	dfs = func(root *TreeNode) int {
 		if root == nil {
 			return 0
 		}
+		// 子节点路径和为负数时，剪枝
 		left := max(0, dfs(root.Left))
 		right := max(0, dfs(root.Right))
 
@@ -25,7 +31,6 @@ func maxPathSum(root *TreeNode) int {
 	}
 
 	dfs(root)
-
 	return maxSum
 }
 
