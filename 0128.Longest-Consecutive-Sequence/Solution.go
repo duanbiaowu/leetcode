@@ -1,53 +1,30 @@
 package leetcode
 
+// 第一时间想到的是 Sort, 然后计算最长序列
+// 但题目要求时间复杂度为：O(N)
+// 空间换时间
 func longestConsecutive(nums []int) int {
-	set := map[int]int{}
-	res := 0
-
-	for _, v := range nums {
-		if _, ok := set[v]; !ok {
-			left, leftOK := set[v-1]
-			if !leftOK {
-				left = 0
-			}
-			right, rightOK := set[v+1]
-			if !rightOK {
-				right = 0
-			}
-
-			cur := left + right + 1
-			if cur > res {
-				res = cur
-			}
-
-			set[v] = cur
-			set[v-left] = cur
-			set[v+right] = cur
-		}
+	set := make(map[int]struct{})
+	for i := range nums {
+		set[nums[i]] = struct{}{}
 	}
 
-	return res
-}
-
-func longestConsecutive2(nums []int) int {
-	set := map[int]struct{}{}
-	for _, v := range nums {
-		set[v] = struct{}{}
-	}
-
-	res := 0
+	longest := 0
 	for v := range set {
 		if _, ok := set[v-1]; !ok {
-			num := v
-			step := 1
-			for _, ok = set[num+1]; ok; _, ok = set[num+1] {
-				num++
-				step++
+			cnt := 1
+			for {
+				if _, ok = set[v+1]; ok {
+					v++
+					cnt++
+				} else {
+					break
+				}
 			}
-			if step > res {
-				res = step
+			if cnt > longest {
+				longest = cnt
 			}
 		}
 	}
-	return res
+	return longest
 }
