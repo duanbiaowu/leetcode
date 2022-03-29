@@ -1,15 +1,15 @@
 package leetcode
 
 func majorityElement(nums []int) int {
-	var res, count int
-	for i := 0; i < len(nums); i++ {
-		if count == 0 {
+	res, cnt := 0, 0
+	for i := range nums {
+		if cnt == 0 {
 			res = nums[i]
 		}
-		if nums[i] == res {
-			count++
+		if res == nums[i] {
+			cnt++
 		} else {
-			count--
+			cnt--
 		}
 	}
 	return res
