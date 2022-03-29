@@ -1,17 +1,20 @@
 package leetcode
 
+// 1. 不要求字典中出现的单词全部都使用
+// 2. 字典中的单词可以重复使用
+// 如果没有这两个条件，需要 backtrack
 func wordBreak(s string, wordDict []string) bool {
-	set := map[string]struct{}{}
-	for i := 0; i < len(wordDict); i++ {
+	set := make(map[string]struct{})
+	for i := range wordDict {
 		set[wordDict[i]] = struct{}{}
 	}
 
-	dp := make([]bool, len(s)+1)
+	n := len(s)
+	dp := make([]bool, n+1)
 	dp[0] = true
-	for i := 1; i <= len(s); i++ {
+
+	for i := 1; i <= n; i++ {
 		for j := 0; j < i; j++ {
-			// map[type]type 基本类型时，不存在元素不会引起Panic
-			// if dp[j] && set[s[j:i]] {
 			if _, ok := set[s[j:i]]; ok && dp[j] {
 				dp[i] = true
 				break
@@ -19,5 +22,5 @@ func wordBreak(s string, wordDict []string) bool {
 		}
 	}
 
-	return dp[len(s)]
+	return dp[n]
 }
