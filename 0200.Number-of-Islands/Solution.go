@@ -1,29 +1,24 @@
 package leetcode
 
 func numIslands(grid [][]byte) int {
-	if len(grid) == 0 {
-		return 0
-	}
-
-	nr, nc := len(grid), len(grid[0])
-	count := 0
-	for i := 0; i < nr; i++ {
-		for j := 0; j < nc; j++ {
+	cnt := 0
+	for i := range grid {
+		for j := range grid[i] {
 			if grid[i][j] == '1' {
-				count++
+				cnt++
 				dfs(grid, i, j)
 			}
 		}
 	}
 
-	return count
+	return cnt
 }
 
 func dfs(grid [][]byte, r, c int) {
-	nr, nc := len(grid), len(grid[0])
-	if r < 0 || r >= nr || c < 0 || c >= nc || grid[r][c] == '0' {
+	if r < 0 || r >= len(grid) || c < 0 || c >= len(grid[0]) || grid[r][c] == '0' {
 		return
 	}
+
 	grid[r][c] = '0'
 	dfs(grid, r-1, c)
 	dfs(grid, r+1, c)
