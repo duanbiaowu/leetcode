@@ -41,6 +41,11 @@ func Test_rob(t *testing.T) {
 			args{[]int{2, 7, 9, 3, 1}},
 			12,
 		},
+		{
+			"test-7",
+			args{[]int{2, 1}},
+			2,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

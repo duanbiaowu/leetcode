@@ -11,7 +11,8 @@ func rob(nums []int) int {
 
 	dp := make([]int, n)
 	dp[0] = nums[0]
-	dp[1] = nums[1]
+	dp[1] = max(dp[0], nums[1])
+
 	for i := 2; i < n; i++ {
 		dp[i] = max(dp[i-2]+nums[i], dp[i-1])
 	}
@@ -29,7 +30,7 @@ func rob2(nums []int) int {
 	}
 
 	first := nums[0]
-	second := max(nums[0], nums[1])
+	second := max(first, nums[1])
 	for i := 2; i < n; i++ {
 		first, second = second, max(first+nums[i], second)
 	}
