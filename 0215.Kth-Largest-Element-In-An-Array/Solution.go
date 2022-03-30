@@ -29,15 +29,17 @@ func randomPartition(nums []int, left, right int) int {
 }
 
 func partition(nums []int, left, right int) int {
-	pivot := nums[right]
-	index := left
+	pivot := right
 	for left < right {
-		if nums[left] < pivot {
-			nums[index], nums[left] = nums[left], nums[index]
-			index++
+		for left < right && nums[left] <= nums[pivot] {
+			left++
 		}
-		left++
+		for left < right && nums[right] >= nums[pivot] {
+			right--
+		}
+		nums[left], nums[right] = nums[right], nums[left]
 	}
-	nums[index], nums[right] = nums[right], nums[index]
-	return index
+
+	nums[left], nums[pivot] = nums[pivot], nums[left]
+	return left
 }
