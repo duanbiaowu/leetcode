@@ -3,11 +3,14 @@ package leetcode
 func reverseWords(s string) string {
 	left, right := 0, len(s)-1
 
-	// 去掉首端空格
-	for ; left <= right && s[left] == ' '; left++ {
+	// 1. 去除左边空格
+	for left < right && s[left] == ' ' {
+		left++
 	}
-	// 去掉末端空格
-	for ; right >= left && s[right] == ' '; right-- {
+
+	// 2. 去除右边空格
+	for right >= left && s[right] == ' ' {
+		right--
 	}
 	if left > right {
 		return ""
@@ -15,23 +18,29 @@ func reverseWords(s string) string {
 
 	res := make([]byte, right-left+1)
 	index := 0
-	// 反转字符串 && 去掉多余空格
+
+	// 3. 反转字符串 && 去除多余空格
 	for right >= left {
-		// s[right + 1] != ' ' => 保留单词间至多一个空格
-		if s[right] != ' ' || s[right+1] != ' ' {
-			res[index] = s[right]
-			index++
+		for s[right] == ' ' && s[right-1] == ' ' {
+			right--
 		}
+		res[index] = s[right]
+		index++
 		right--
 	}
 
-	// 反转每个单词
-	for left, right = 0, 0; left < index; {
-		for ; right < index && res[right] != ' '; right++ {
+	// 4. 反转每个单词
+	left, right = 0, 0
+	for left < index {
+		for right < index && res[right] != ' ' {
+			right++
 		}
 
-		for i, j := left, right-1; i < j; i, j = i+1, j-1 {
+		i, j := left, right-1
+		for i < j {
 			res[i], res[j] = res[j], res[i]
+			i++
+			j--
 		}
 
 		right++
