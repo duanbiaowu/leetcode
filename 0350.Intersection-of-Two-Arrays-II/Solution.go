@@ -5,16 +5,16 @@ func intersect(nums1 []int, nums2 []int) []int {
 		return intersect(nums2, nums1)
 	}
 
-	m := map[int]int{}
-	for _, val := range nums1 {
-		m[val]++
+	m := make(map[int]int)
+	for i := range nums1 {
+		m[nums1[i]]++
 	}
 
-	res := []int{}
-	for _, val := range nums2 {
-		if count, ok := m[val]; ok && count > 0 {
-			res = append(res, val)
-			m[val]--
+	var res []int
+	for i := range nums2 {
+		if cnt, ok := m[nums2[i]]; ok && cnt > 0 {
+			res = append(res, nums2[i])
+			m[nums2[i]]--
 		}
 	}
 	return res
