@@ -21,7 +21,7 @@ func Test_intersect(t *testing.T) {
 				[]int{},
 				[]int{},
 			},
-			[]int{},
+			nil,
 		},
 		{
 			"test-2",
@@ -29,7 +29,7 @@ func Test_intersect(t *testing.T) {
 				[]int{1},
 				[]int{},
 			},
-			[]int{},
+			nil,
 		},
 		{
 			"test-3",
@@ -37,7 +37,7 @@ func Test_intersect(t *testing.T) {
 				[]int{},
 				[]int{1},
 			},
-			[]int{},
+			nil,
 		},
 		{
 			"test-4",
@@ -45,7 +45,7 @@ func Test_intersect(t *testing.T) {
 				[]int{1},
 				[]int{2},
 			},
-			[]int{},
+			nil,
 		},
 		{
 			"test-5",
