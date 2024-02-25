@@ -36,20 +36,4 @@ func Test_toHex(t *testing.T) {
 			}
 		})
 	}
-
-	findComplement(5)
-}
-
-func findComplement(num int) int {
-	n, cnt := num, 0
-
-	for n > 0 {
-		n >>= 1
-		cnt = (cnt << 1) + 1
-		println(cnt)
-	}
-
-	println(5 ^ 7)
-
-	return num ^ cnt
 }
