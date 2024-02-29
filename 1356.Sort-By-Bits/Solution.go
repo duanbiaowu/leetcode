@@ -29,8 +29,8 @@ func sortByBitsOpts(arr []int) []int {
 	// 定义 bitMemo[i] 为数字 i 的二进制中为 1 的数量
 	// 则可以列出下面的递推式
 	// bitMemo[i] = bitMemo[i>>1] + i&1
-	bitMemo := [1e4]int{}
-	for i := 1; i < 1e4; i++ {
+	bitMemo := [1e4 + 1]int{}
+	for i := 1; i <= 1e4; i++ {
 		bitMemo[i] = bitMemo[i>>1] + i&1
 	}
 
