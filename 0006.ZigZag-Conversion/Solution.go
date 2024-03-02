@@ -1,7 +1,7 @@
 package leetcode
 
 import (
-	"bytes"
+	"strings"
 )
 
 // 按行访问
@@ -37,9 +37,9 @@ func convert(s string, numRows int) string {
 	}
 
 	// 注意结构: 因为返回结果为字符串, 所以不需要矩阵存储
-	rows := []bytes.Buffer{}
+	rows := []strings.Builder{}
 	for i := 0; i < min(numRows, len(s)); i++ {
-		rows = append(rows, bytes.Buffer{})
+		rows = append(rows, strings.Builder{})
 	}
 
 	curRow := 0
@@ -56,11 +56,11 @@ func convert(s string, numRows int) string {
 		}
 	}
 
-	buf := bytes.Buffer{}
+	var sb strings.Builder
 	for _, row := range rows {
-		buf.WriteString(row.String())
+		sb.WriteString(row.String())
 	}
-	return buf.String()
+	return sb.String()
 }
 
 func min(a int, b int) int {
