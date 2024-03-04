@@ -24,6 +24,7 @@ func nextGreaterElement(nums1 []int, nums2 []int) []int {
 
 // reference: https://leetcode.cn/problems/next-greater-element-i/solutions/1065517/xia-yi-ge-geng-da-yuan-su-i-by-leetcode-bfcoj/
 func nextGreaterElementOpt(nums1 []int, nums2 []int) []int {
+	// 用于存储 nums1 数组中每个元素右侧下一个最大值的索引
 	index := make(map[int]int)
 	// 单调栈，用于存储中间状态值
 	stack := []int{}
