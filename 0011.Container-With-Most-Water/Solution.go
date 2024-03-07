@@ -8,15 +8,18 @@ func maxArea(height []int) int {
 
 	for left < right {
 		width := right - left
-		short := 0
+		// 表示低水位
+		low := 0
+
 		if height[left] < height[right] {
-			short = height[left]
+			low = height[left]
 			left++
 		} else {
-			short = height[right]
+			low = height[right]
 			right--
 		}
-		res = max(res, width*short)
+
+		res = max(res, width*low)
 	}
 
 	return res
