@@ -9,30 +9,31 @@ func rotateRight(head *ListNode, k int) *ListNode {
 		return head
 	}
 
-	// 计算链表长度
+	// 1. 计算链表长度
 	n := 1
 	cur := head
 	for cur.Next != nil {
-		cur = cur.Next
 		n++
+		cur = cur.Next
 	}
 
-	// 计算旋转偏移量
+	// 2. 计算旋转偏移量
+	// 偏移量 = 链表长度 - 移动位置%链表长度
 	offset := n - k%n
 	if offset == 0 {
 		return head
 	}
 
-	// 链表成环形
+	// 3. 将链表首位相连，形成循环链表
 	cur.Next = head
 	for offset > 0 {
-		cur = cur.Next
 		offset--
+		cur = cur.Next
 	}
 
-	// 链表切断环形
-	res := cur.Next
+	// 4. 将链表以偏移量进行切割
+	next := cur.Next
 	cur.Next = nil
 
-	return res
+	return next
 }
