@@ -13,11 +13,13 @@ func buildTree(inorder []int, postorder []int) *TreeNode {
 
 	root := &TreeNode{Val: postorder[n-1]}
 	postorder = postorder[:n-1]
-	for i, val := range inorder {
-		if val == root.Val {
+
+	for i := range inorder {
+		if inorder[i] == root.Val {
 			root.Left = buildTree(inorder[:i], postorder[:i])
 			root.Right = buildTree(inorder[i+1:], postorder[i:])
 		}
 	}
+
 	return root
 }
