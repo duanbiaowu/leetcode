@@ -31,13 +31,17 @@ func connectIteratively(root *Node) *Node {
 		return root
 	}
 
+	// 使用迭代来实现层级遍历
 	for left := root; left.Left != nil; left = left.Left {
+		// 遍历当前层，也就是遍历当前层所有节点连接起来形成的 “链表”
+		// 将下一层的所有节点连接为一个链表
 		for cur := left; cur != nil; cur = cur.Next {
 			cur.Left.Next = cur.Right
 			if cur.Next != nil {
 				cur.Right.Next = cur.Next.Left
 			}
 		}
+		// 当前层遍历完成结束后，下一层的所有节点已经连接为一个链表
 	}
 
 	return root

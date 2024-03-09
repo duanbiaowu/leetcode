@@ -15,6 +15,7 @@ func connectBFS(root *Node) *Node {
 	queue := []*Node{root}
 	for len(queue) > 0 {
 		n := len(queue)
+		// 不断将节点入队、出队影响到了执行效率
 		for i := 0; i < n; i++ {
 			if i+1 < n {
 				queue[i].Next = queue[i+1]
@@ -27,6 +28,48 @@ func connectBFS(root *Node) *Node {
 			}
 		}
 		queue = queue[n:]
+	}
+
+	return root
+}
+
+func connectBFSOpt(root *Node) *Node {
+	if root == nil {
+		return nil
+	}
+
+	// cur 表示当前所在层
+	cur := root
+	for cur != nil {
+		// 表示下一层的 “哨兵节点”，用于保留下一层链表头节点的指针
+		dummy := &Node{}
+
+		// prev 表示下一层节点的遍历指针，指向 “当前节点”
+		// 初始化时指向下一层的 “哨兵节点”
+		prev := dummy
+
+		// 将下一层的所有节点连接起来，形成一个链表
+		// 链表的头节点就是 dummy.Next
+
+		// 每次开始循环之前，cur 都指向当前层的第一个节点
+		// 循环执行中，cur 会不断通过 cur.Next 向右移动
+		// 本质上和链表的遍历过程是一致的
+		for cur != nil {
+			// 连接左节点
+			if cur.Left != nil {
+				prev.Next = cur.Left
+				prev = prev.Next
+			}
+			// 连接右节点
+			if cur.Right != nil {
+				prev.Next = cur.Right
+				prev = prev.Next
+			}
+			cur = cur.Next
+		}
+
+		// 当前层下移一层，转到下一层
+		cur = dummy.Next
 	}
 
 	return root
