@@ -32,18 +32,34 @@ func trap(height []int) int {
 // Stack
 func trap2(height []int) int {
 	res := 0
+
 	var stack []int
 	for i := range height {
+		// height[i] > height[stack[len(stack)-1]]
+		// 说明找到了右边 “较高的柱子” (相较当前元素而言)
 		for len(stack) > 0 && height[i] > height[stack[len(stack)-1]] {
 			top := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
+
+			// 如果栈内只有一个元素
+			// 那么此时 stack 的长度等于 0
+			// 也就说明此时才刚刚找到 “左边的柱子”
+			// 还没有找到 “右边的柱子”
+			// 比如这种情况 [0,1,0,2,1,0,1,3,2,1,2,1]
+			// 当 i 为 1 时，左边的柱子 (栈顶元素) 是 0
+			// 这时接不到任何雨水，所以无需计算
 			if len(stack) > 0 {
 				left := stack[len(stack)-1]
+
+				// 左右两个柱子之间的距离
 				w := i - left - 1
+				// 左右两个柱子之间的高度，以较低的为准，“木桶原理”
 				h := min(height[i], height[left]) - height[top]
+
 				res += w * h
 			}
 		}
+
 		stack = append(stack, i)
 	}
 
