@@ -1,17 +1,17 @@
 package leetcode
 
 func strStr(haystack string, needle string) int {
-	n, m := len(haystack), len(needle)
+	strLen, subLen := len(haystack), len(needle)
 
-	for i := 0; i <= n-m; i++ {
-		j := 0
-		for ; j < m; j++ {
-			if haystack[i+j] != needle[j] {
+	for fast := 0; fast <= strLen-subLen; fast++ {
+		slow := 0
+		for ; slow < subLen; slow++ {
+			if haystack[fast+slow] != needle[slow] {
 				break
 			}
 		}
-		if j == m {
-			return i
+		if slow == subLen {
+			return fast
 		}
 	}
 	return -1

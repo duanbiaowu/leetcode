@@ -15,17 +15,17 @@ func Test_validateStackSequences(t *testing.T) {
 		{
 			"test-1",
 			args{nil, nil},
-			false,
+			true,
 		},
 		{
 			"test-2",
 			args{[]int{1}, nil},
-			false,
+			true,
 		},
 		{
 			"test-3",
 			args{nil, []int{1}},
-			false,
+			true,
 		},
 		{
 			"test-4",

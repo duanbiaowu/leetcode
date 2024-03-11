@@ -1,6 +1,8 @@
 package leetcode
 
-import "github.com/duanbiaowu/leetcode/structures"
+import (
+	"github.com/duanbiaowu/leetcode/structures"
+)
 
 // ListNode Definition for singly-linked list.
 type ListNode = structures.ListNode
@@ -14,11 +16,13 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 	pa, pb := headA, headB
 	for pa != pb {
 		if pa == nil {
+			// 注意这里需要指向链表 B 的头节点
 			pa = headB
 		} else {
 			pa = pa.Next
 		}
 		if pb == nil {
+			// 注意这里需要指向链表 A 的头节点
 			pb = headA
 		} else {
 			pb = pb.Next

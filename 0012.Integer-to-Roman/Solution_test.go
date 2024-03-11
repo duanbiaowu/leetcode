@@ -36,6 +36,11 @@ func Test_intToRoman(t *testing.T) {
 			args{1994},
 			"MCMXCIV",
 		},
+		{
+			"test-6",
+			args{3999},
+			"MMMCMXCIX",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

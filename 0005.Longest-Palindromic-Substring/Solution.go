@@ -50,12 +50,12 @@ func longestPalindrome(s string) string {
 	left, right := 0, 0
 	for i := range s {
 		// 返回两个变量（起始位置和结束位置）比单个变量（总长度）可读性更好
-		cnt1 := expandAroundCenterCount(s, i, i)
-		cnt2 := expandAroundCenterCount(s, i, i+1)
+		cnt1 := expandAroundCenterCount(s, i, i)   // 单个字符向两边扩展
+		cnt2 := expandAroundCenterCount(s, i, i+1) // 相邻字符向两边扩展
 		cnt := max(cnt1, cnt2)
 		if cnt > right-left {
-			left = i - (cnt-1)>>1
-			right = i + cnt>>1
+			left = i - (cnt-1)>>1 // 更新最长子串的左边界
+			right = i + cnt>>1    // 更新最长子串的右边界
 		}
 	}
 	return s[left : right+1]

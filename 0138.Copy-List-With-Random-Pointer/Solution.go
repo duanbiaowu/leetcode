@@ -13,11 +13,14 @@ func copyRandomList(head *Node) *Node {
 	// 1->2->3  ==>  1->1'->2->2'->3->3'
 	cur := head
 	for cur != nil {
-		cur.Next = &Node{Val: cur.Val, Next: cur.Next}
+		cur.Next = &Node{
+			Val:  cur.Val,
+			Next: cur.Next,
+		}
 		cur = cur.Next.Next
 	}
 
-	// 处理random指针
+	// 处理 Random 指针
 	cur = head
 	for cur != nil {
 		if cur.Random != nil {
@@ -26,14 +29,15 @@ func copyRandomList(head *Node) *Node {
 		cur = cur.Next.Next
 	}
 
-	// 分离两个链表
+	// 分离源节点和影子节点
+	// 将影子节点作为最终结果返回
 	cur = head
-	cloneHead := cur.Next
+	clonedHead := cur.Next
 	for cur != nil && cur.Next != nil {
-		tmp := cur.Next
+		next := cur.Next
 		cur.Next = cur.Next.Next
-		cur = tmp
+		cur = next
 	}
 
-	return cloneHead
+	return clonedHead
 }

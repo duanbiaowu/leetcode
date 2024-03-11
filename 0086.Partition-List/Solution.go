@@ -5,11 +5,11 @@ import "github.com/duanbiaowu/leetcode/structures"
 type ListNode = structures.ListNode
 
 func partition(head *ListNode, x int) *ListNode {
-	dummySmall := &ListNode{}
-	dummyLarge := &ListNode{}
+	smallDummy := &ListNode{}
+	largeDummy := &ListNode{}
 
-	small := dummySmall
-	large := dummyLarge
+	small := smallDummy
+	large := largeDummy
 
 	for head != nil {
 		if head.Val < x {
@@ -23,7 +23,7 @@ func partition(head *ListNode, x int) *ListNode {
 	}
 
 	large.Next = nil
-	small.Next = dummyLarge.Next
+	small.Next = largeDummy.Next
 
-	return dummySmall.Next
+	return smallDummy.Next
 }

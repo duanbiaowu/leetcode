@@ -1,6 +1,8 @@
 package leetcode
 
-import "strings"
+import (
+	"strings"
+)
 
 func simplifyPath(path string) string {
 	var stack []string

@@ -5,6 +5,11 @@ import "github.com/duanbiaowu/leetcode/structures"
 type ListNode = structures.ListNode
 
 func hasCycle(head *ListNode) bool {
+	// 需要注意的是，即使只有一个节点，也可能是环形链表
+	// 所以这段代码无法通过测试
+	// if head == nil || head.Next == nil {
+	// 	return false
+	// }
 	if head == nil {
 		return false
 	}

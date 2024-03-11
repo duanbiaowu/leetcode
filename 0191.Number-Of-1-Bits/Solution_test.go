@@ -14,12 +14,12 @@ func Test_hammingWeight(t *testing.T) {
 		{
 			"test-1",
 			args{5},
-			1,
+			2,
 		},
 		{
 			"test-2",
 			args{13},
-			2,
+			3,
 		},
 	}
 	for _, tt := range tests {

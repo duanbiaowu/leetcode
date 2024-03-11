@@ -2,6 +2,10 @@ package leetcode
 
 func masterMind(solution string, guess string) []int {
 	hit, total := 0, 0
+	if len(solution) == 0 || len(guess) == 0 {
+		return []int{hit, total}
+	}
+
 	m := [26]int{}
 	for i := 0; i < 4; i++ {
 		m[guess[i]-'A']++

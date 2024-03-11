@@ -1,9 +1,10 @@
 package leetcode
 
 import (
-	"github.com/duanbiaowu/leetcode/structures"
 	"reflect"
 	"testing"
+
+	"github.com/duanbiaowu/leetcode/structures"
 )
 
 func Test_reverseBetween(t *testing.T) {

@@ -19,6 +19,7 @@ func subsets(nums []int) [][]int {
 	for mask := 0; mask < 1<<n; mask++ {
 		var set []int
 		for i, v := range nums {
+			// 注意这里判断的是当前位置索引和掩码的 与 运算
 			if mask>>i&1 > 0 {
 				set = append(set, v)
 			}
