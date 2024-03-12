@@ -1,9 +1,9 @@
 package leetcode
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import "leetcode/structures"
+
+// ListNode structures.ListNode
+type ListNode = structures.ListNode
 
 func getLength(head *ListNode) int {
 	length := 0
@@ -36,16 +36,24 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 		return head
 	}
 
+	// 哨兵节点
 	dummy := &ListNode{0, head}
+	// 注意快慢指针的初始化指向
 	fast, slow := head, dummy
+
+	// 快指针先走 N 步
 	for i := 0; i < n && fast != nil; i++ {
 		fast = fast.Next
 	}
 
+	// 然后快慢指针一起走
 	for fast != nil {
 		slow = slow.Next
 		fast = fast.Next
 	}
+
+	// 当快指针扫描到链表结尾时
+	// 慢指针指向的正好是需要删除的节点的前置节点
 	slow.Next = slow.Next.Next
 
 	return dummy.Next
