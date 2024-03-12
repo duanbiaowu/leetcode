@@ -18,8 +18,14 @@ func swapPairs2(head *ListNode) *ListNode {
 	dummy := &ListNode{Next: head}
 
 	cur := dummy
-	// cur 必须从 dummy 开始，这样才可以更换 dummy.Next (head) 指针的指向，因为最终要返回 dummy.Next
-	// cur 初始化时指向 dummy, 但是在遍历过程中会不断发生变更，正确的答案，最终的 dummy.Next 指向的是源链表的第二个节点
+	// cur 必须从 dummy 开始
+	// 这样才可以更换 dummy.Next (head) 指针的指向
+	// 因为最终要返回 dummy.Next
+
+	// cur 初始化时指向 dummy
+	// 但是在遍历过程中会不断发生变更
+	// 而 dummy 只会在第一次指向 head.Next.Next 之后就不会发生改变
+	// 正确的答案，最终的 dummy.Next 指向的是源链表的第二个节点
 	for cur.Next != nil && cur.Next.Next != nil {
 		node1 := cur.Next
 		node2 := cur.Next.Next
