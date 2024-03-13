@@ -25,6 +25,11 @@ func helper(root *TreeNode, low, hi int) bool {
 	return helper(root.Left, low, root.Val) && helper(root.Right, root.Val, hi)
 }
 
+// 二叉搜索树中序遍历满足有序性
+// 通过中序遍历将值保存到数组中
+// 使用一个辅助栈，先找到树的最左边节点，然后判断【最左边节点值】是否小于等于【“上一个 root” 节点值】
+// 更新 【“上一个 root” 节点值】为【当前最左边的节点值】
+// 继续检测当前节点的右节点
 func isValidBST2(root *TreeNode) bool {
 	inOrder := math.MinInt64
 
