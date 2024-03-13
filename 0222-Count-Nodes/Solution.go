@@ -1,6 +1,8 @@
 package leetcode
 
-import "github.com/duanbiaowu/leetcode/structures"
+import (
+	"github.com/duanbiaowu/leetcode/structures"
+)
 
 type TreeNode = structures.TreeNode
 

@@ -17,7 +17,7 @@ func Test_maxPathSum(t *testing.T) {
 	}{
 		{
 			"test-1",
-			args{nil},
+			args{structures.GenerateTreeNodesBySlice([]int{0})},
 			0,
 		},
 		{
@@ -26,14 +26,19 @@ func Test_maxPathSum(t *testing.T) {
 			6,
 		},
 		{
-			"test-2",
+			"test-3",
 			args{structures.GenerateTreeNodesBySlice([]int{-10, 9, 20, structures.NULL, structures.NULL, 15, 7})},
 			42,
+		},
+		{
+			"test-4",
+			args{structures.GenerateTreeNodesBySlice([]int{-3})},
+			-3,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := maxPathSum(tt.args.root); got != tt.want {
+			if got := maxPathSum2(tt.args.root); got != tt.want {
 				t.Errorf("maxPathSum() = %v, want %v", got, tt.want)
 			}
 		})

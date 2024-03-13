@@ -1,8 +1,9 @@
 package leetcode
 
 import (
-	"github.com/duanbiaowu/leetcode/structures"
 	"math"
+
+	"github.com/duanbiaowu/leetcode/structures"
 )
 
 type TreeNode = structures.TreeNode
@@ -24,7 +25,7 @@ func helper(root *TreeNode, low, hi int) bool {
 	return helper(root.Left, low, root.Val) && helper(root.Right, root.Val, hi)
 }
 
-func isValidBST2(root *TreeNode) bool {
+func isValidBSTInOrder(root *TreeNode) bool {
 	var stack []*TreeNode
 	inorder := math.MinInt64
 	for len(stack) > 0 || root != nil {

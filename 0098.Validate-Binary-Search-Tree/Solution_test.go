@@ -55,6 +55,15 @@ func Test_isValidBST(t *testing.T) {
 			}},
 			true,
 		},
+		{
+			"test-7",
+			args{&TreeNode{
+				Val:   5,
+				Left:  &TreeNode{Val: 1},
+				Right: &TreeNode{Val: 3},
+			}},
+			true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
