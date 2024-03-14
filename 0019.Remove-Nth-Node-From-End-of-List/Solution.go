@@ -37,7 +37,7 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	}
 
 	// 哨兵节点
-	dummy := &ListNode{0, head}
+	dummy := &ListNode{Val: 0, Next: head}
 	// 注意快慢指针的初始化指向
 	fast, slow := head, dummy
 
