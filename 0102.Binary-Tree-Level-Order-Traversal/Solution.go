@@ -2,6 +2,7 @@ package leetcode
 
 import "github.com/duanbiaowu/leetcode/structures"
 
+// TreeNode Definition for a binary tree node
 type TreeNode = structures.TreeNode
 
 func levelOrder(root *TreeNode) [][]int {
@@ -32,10 +33,6 @@ func levelOrder(root *TreeNode) [][]int {
 }
 
 func levelOrderDFS(root *TreeNode) [][]int {
-	if root == nil {
-		return [][]int{}
-	}
-
 	var res [][]int
 	dfs(root, 0, &res)
 	return res

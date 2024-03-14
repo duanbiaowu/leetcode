@@ -4,6 +4,7 @@ import (
 	"github.com/duanbiaowu/leetcode/structures"
 )
 
+// TreeNode Definition for a binary tree node
 type TreeNode = structures.TreeNode
 
 func averageOfLevels(root *TreeNode) []float64 {
