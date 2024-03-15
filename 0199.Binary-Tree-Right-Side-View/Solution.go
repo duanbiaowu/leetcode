@@ -10,11 +10,12 @@ func rightSideView(root *TreeNode) []int {
 	}
 
 	var res []int
-	var queue = []*TreeNode{root}
+	queue := []*TreeNode{root}
 
 	for len(queue) > 0 {
-		n := len(queue)
-		for i := 0; i < n; i++ {
+		length := len(queue)
+
+		for i := 0; i < length; i++ {
 			if queue[i].Left != nil {
 				queue = append(queue, queue[i].Left)
 			}
@@ -22,8 +23,9 @@ func rightSideView(root *TreeNode) []int {
 				queue = append(queue, queue[i].Right)
 			}
 		}
-		res = append(res, queue[n-1].Val)
-		queue = queue[n:]
+
+		res = append(res, queue[length-1].Val)
+		queue = queue[length:]
 	}
 
 	return res
@@ -41,9 +43,13 @@ func dfs(root *TreeNode, depth int, res *[]int) {
 	if root == nil {
 		return
 	}
+
 	if depth == len(*res) {
 		*res = append(*res, root.Val)
 	}
+
+	// 先递归右子树
 	dfs(root.Right, depth+1, res)
+	// 再递归左子树
 	dfs(root.Left, depth+1, res)
 }
