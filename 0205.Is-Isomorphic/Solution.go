@@ -10,6 +10,8 @@ func isIsomorphic(s string, t string) bool {
 			return false
 		} else {
 			if sMap[s[i]] == 0 {
+				// 更新字符位置为最新索引 + 1
+				// i + 1 是为了避免 map value 默认值为 0 引起的错误
 				sMap[s[i]] = i + 1
 				tMap[t[i]] = i + 1
 			}
