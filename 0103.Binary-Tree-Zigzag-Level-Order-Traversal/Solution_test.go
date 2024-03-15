@@ -1,9 +1,10 @@
 package leetcode
 
 import (
-	"github.com/duanbiaowu/leetcode/structures"
 	"reflect"
 	"testing"
+
+	"github.com/duanbiaowu/leetcode/structures"
 )
 
 func Test_zigzagLevelOrder(t *testing.T) {
@@ -18,7 +19,7 @@ func Test_zigzagLevelOrder(t *testing.T) {
 		{
 			"test-1",
 			args{nil},
-			nil,
+			[][]int{},
 		},
 		{
 			"test-2",
