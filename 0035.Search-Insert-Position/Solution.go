@@ -19,6 +19,7 @@ func searchInsertWithComment(nums []int, target int) int {
 	for low <= hi {
 		mid := low + (hi-low)>>1
 		if nums[mid] == target {
+			// 针对不存在重复元素的情况
 			// 找到目标值后直接返回索引
 			return mid
 		} else if nums[mid] >= target {
