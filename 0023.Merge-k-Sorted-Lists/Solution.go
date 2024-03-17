@@ -1,5 +1,6 @@
 package leetcode
 
+// ListNode Definition for singly-linked list
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -39,7 +40,7 @@ func merge(lists []*ListNode, left, right int) *ListNode {
 //
 //	pq := make(ListNodeQueue, len(lists))
 //	for i, node := range lists {
-		// 可以入队时判断是否为nil
+//      // 可以入队时判断是否为nil
 //		pq[i] = node
 //	}
 //
@@ -49,7 +50,7 @@ func merge(lists []*ListNode, left, right int) *ListNode {
 //
 //	for pq.Len() > 0 {
 //		next := heap.Pop(&pq).(*ListNode)
-		// 因为入队的时候没有判断是否为nil，所以出队后需要判断
+// 		// 因为入队的时候没有判断是否为nil，所以出队后需要判断
 //		if next != nil {
 //			cur.Next = next
 //			cur = cur.Next
