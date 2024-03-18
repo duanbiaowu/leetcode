@@ -1,27 +1,32 @@
 package leetcode
 
 func numIslands(grid [][]byte) int {
-	cnt := 0
-	for i := range grid {
-		for j := range grid[i] {
-			if grid[i][j] == '1' {
-				cnt++
-				dfs(grid, i, j)
+	res := 0
+
+	for row := range grid {
+		for col := range grid[row] {
+			if grid[row][col] == '1' {
+				// 如果找到一块陆地，以该坐标为中心，上下左右四个方向继续探索
+				res++
+				dfs(grid, row, col)
 			}
 		}
 	}
 
-	return cnt
+	return res
 }
 
-func dfs(grid [][]byte, r, c int) {
-	if r < 0 || r >= len(grid) || c < 0 || c >= len(grid[0]) || grid[r][c] == '0' {
+func dfs(grid [][]byte, row, col int) {
+	// 如果坐标已越界或者当前坐标不是陆地
+	// 直接返回
+	if row < 0 || row >= len(grid) || col < 0 || col >= len(grid[0]) || grid[row][col] == '0' {
 		return
 	}
 
-	grid[r][c] = '0'
-	dfs(grid, r-1, c)
-	dfs(grid, r+1, c)
-	dfs(grid, r, c+1)
-	dfs(grid, r, c-1)
+	// 已经探索过的坐标标记为 0, 避免重复计算
+	grid[row][col] = '0'
+	dfs(grid, row-1, col) // ⬆  方向递归
+	dfs(grid, row+1, col) // ⬇  方向递归
+	dfs(grid, row, col-1) // <- 方向递归
+	dfs(grid, row, col+1) // -> 方向递归
 }
