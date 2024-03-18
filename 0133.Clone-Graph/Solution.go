@@ -1,6 +1,6 @@
 package leetcode
 
-// Noe Definition for a Node.
+// Node Definition for a Node.
 type Node struct {
 	Val       int
 	Neighbors []*Node
