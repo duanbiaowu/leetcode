@@ -52,7 +52,7 @@ func Test_calcEquation(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := calcEquation(tt.args.equations, tt.args.values, tt.args.queries); !reflect.DeepEqual(got, tt.want) {
+			if got := calcEquationOpt(tt.args.equations, tt.args.values, tt.args.queries); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("calcEquation() = %v, want %v", got, tt.want)
 			}
 		})
