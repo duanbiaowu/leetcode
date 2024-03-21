@@ -7,8 +7,9 @@ func maxArea(height []int) int {
 	res := 0
 
 	for left < right {
+		// 表示当前矩形的长度
 		width := right - left
-		// 表示低水位
+		// 表示当前矩形的宽度 (低水位)
 		low := 0
 
 		if height[left] < height[right] {
@@ -19,6 +20,7 @@ func maxArea(height []int) int {
 			right--
 		}
 
+		// 更新已知的最大矩形
 		res = max(res, width*low)
 	}
 
