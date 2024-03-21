@@ -18,6 +18,15 @@ func sortedSquares(nums []int) []int {
 		//   - (-9) = 9 < 10
 		//   - (9) = -9 < 10
 		//   PS: 由此可见如果左边的数字平方后比右边数字平方后小，其取负数依然比右边数字小
+
+		// if x, y := -nums[left], nums[right]; x > y {
+		// 	res[index] = x * x
+		// 	left++
+		// } else {
+		// 	res[index] = y * y
+		// 	right--
+		// }
+
 		if x, y := nums[left]*nums[left], nums[right]*nums[right]; x > y {
 			res[index] = x
 			left++
@@ -26,5 +35,6 @@ func sortedSquares(nums []int) []int {
 			right--
 		}
 	}
+
 	return res
 }

@@ -15,6 +15,7 @@ func minNumber(nums []int) string {
 	return strings.Join(s, "")
 }
 
+// 经典快速排序模板
 func quickSort(s []string, left, right int) {
 	if left < right {
 		p := partition(s, left, right)
