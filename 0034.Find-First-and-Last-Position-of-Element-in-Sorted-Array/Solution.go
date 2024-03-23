@@ -1,14 +1,22 @@
 package leetcode
 
 func searchRange(nums []int, target int) []int {
+	// 查找目标元素 target 的插入位置
 	left := search(nums, target)
+	// 查找目标元素 target+1 的插入位置
+	// 该位置正好就是 target 的最后一个出现位置
 	right := search(nums, target+1)
+
+	// 边界处理
 	if left == len(nums) || nums[left] != target {
 		return []int{-1, -1}
 	}
+
 	return []int{left, right - 1}
 }
 
+// 寻找目标元素插入位置
+// 0035 原题
 func search(nums []int, target int) int {
 	low, hi := 0, len(nums)-1
 	for low <= hi {

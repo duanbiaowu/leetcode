@@ -4,12 +4,16 @@ package leetcode
 // 可以在该数组上二分查找
 func searchMatrix(matrix [][]int, target int) bool {
 	rows := len(matrix)
+	// 边界处理
 	if rows == 0 {
 		return false
 	}
 
 	cols := len(matrix[0])
+	// 一维数组的长度等于矩阵的行数量 * 列数量 - 1
+	// 因为数组下标从 0 开始
 	low, hi := 0, rows*cols-1
+
 	for low <= hi {
 		mid := low + (hi-low)>>1
 		// 将索引转换为具体的矩阵坐标
