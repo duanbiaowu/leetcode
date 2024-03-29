@@ -1,10 +1,10 @@
 package leetcode
 
 // reference: https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray/solution/si-lu-qing-xi-ming-liao-kan-bu-dong-bu-cun-zai-de-/
-// 1. 把数组分为 3 段
-// 		左段和右段是无序的，
-//		但是满足最小值大于 左段 的最大值，最大值小于 右段 的最小值
-// 2. 寻找中段的左右边界
+//  1. 把数组分为 3 段
+//     左段和右段是无序的，
+//     但是满足最小值大于 左段 的最大值，最大值小于 右段 的最小值
+//  2. 寻找中段的左右边界
 func findUnsortedSubarray(nums []int) int {
 	n := len(nums)
 	if n < 2 {
