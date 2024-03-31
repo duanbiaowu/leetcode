@@ -28,6 +28,54 @@ func maximalSquare(matrix [][]byte) int {
 	return maxSide * maxSide
 }
 
+// 暴力法 (超时)
+// 超时原因: 重复检测
+func maximalSquareSample(matrix [][]byte) int {
+	if len(matrix) == 0 {
+		return 0
+	}
+
+	var res int
+	rows, cols := len(matrix), len(matrix[0])
+
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if matrix[i][j] == '0' {
+				continue
+			}
+
+			// 以当前坐标为坐上角，检测最大正方形的边长
+			// 边长从 1 开始递增
+			length := 1
+
+			flag := true
+			for step := 2; i+step <= rows && j+step <= cols; step++ {
+				for i2 := 0; i2 < step && flag; i2++ {
+					for j2 := 0; j2 < step && flag; j2++ {
+						if matrix[i+i2][j+j2] == '0' {
+							flag = false
+						}
+					}
+				}
+				if flag {
+					length = step
+				}
+			}
+
+			res = max(res, length*length)
+		}
+	}
+
+	return res
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 func min(x, y, z int) int {
 	if x < y && x < z {
 		return x
