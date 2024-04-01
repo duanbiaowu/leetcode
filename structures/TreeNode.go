@@ -1,6 +1,7 @@
 package structures
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -10,6 +11,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+// 使用 math.MinInt64 来表示 NULL 节点的值
 var NULL = math.MinInt64
 
 func GenerateTreeNodesBySlice(nums []int) *TreeNode {
@@ -20,7 +22,7 @@ func GenerateTreeNodesBySlice(nums []int) *TreeNode {
 
 	root := &TreeNode{Val: nums[0]}
 
-	queue := make([]*TreeNode, 1, n/2+1)
+	queue := make([]*TreeNode, 1, n>>1+1)
 	queue[0] = root
 
 	for top, index := 0, 1; index < n; index++ {
@@ -40,6 +42,101 @@ func GenerateTreeNodesBySlice(nums []int) *TreeNode {
 	}
 
 	return root
+}
+
+func DumpTree(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	// 保存需要打印的数字列表
+	levelRows := make([][]int, 0)
+	levelRows = append(levelRows, []int{root.Val})
+
+	// 使用 BFS 逐层组装数据
+	queue := []*TreeNode{root}
+
+	for len(queue) > 0 {
+		length := len(queue)
+		row := []int{}
+
+		// 从上一层数据中先填充当前层 NULL 数据
+		if len(levelRows) > 1 {
+			for _, val := range levelRows[len(levelRows)-1] {
+				if val != NULL {
+					break
+				}
+				// 上一层的 NULL 节点对应当前层的两个 NULL 子节点
+				row = append(row, NULL)
+			}
+		}
+
+		for i := 0; i < length; i++ {
+			if queue[i].Left != nil {
+				queue = append(queue, queue[i].Left)
+				row = append(row, queue[i].Left.Val)
+			} else {
+				row = append(row, NULL)
+			}
+
+			if queue[i].Right != nil {
+				queue = append(queue, queue[i].Right)
+				row = append(row, queue[i].Right.Val)
+			} else {
+				row = append(row, NULL)
+			}
+		}
+
+		levelRows = append(levelRows, row)
+		queue = queue[length:]
+	}
+
+	dumpTreeFormat(levelRows)
+}
+
+func dumpTreeFormat(valList [][]int) {
+	// 打印树形结构
+	width := len(valList)
+	for i := range valList {
+		// 填充左侧空格
+		for j := 0; j < width-i-1; j++ {
+			fmt.Printf("  ")
+		}
+
+		// 从第二层开始
+		// 需要填充上下连接符
+		if i > 0 {
+			for j := range valList[i] {
+				if valList[i][j] == NULL {
+					fmt.Printf("  ")
+				} else {
+					if j&1 == 0 {
+						fmt.Printf(" / ")
+					} else {
+						fmt.Printf("\\  ")
+					}
+				}
+			}
+
+			fmt.Println()
+
+			// 填充下一行数字的左侧空格
+			for j := 0; j < width-i-1; j++ {
+				fmt.Printf("  ")
+			}
+		}
+
+		// 填充数字
+		for j := range valList[i] {
+			if valList[i][j] == NULL {
+				fmt.Printf("  ")
+			} else {
+				fmt.Printf("%d   ", valList[i][j])
+			}
+		}
+
+		fmt.Println()
+	}
 }
 
 type BST struct {
