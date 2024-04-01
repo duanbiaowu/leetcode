@@ -1,5 +1,6 @@
 package solution
 
+// Node Definition for a Node
 type Node struct {
 	Val   int
 	Left  *Node
@@ -32,6 +33,12 @@ func connectBFS(root *Node) *Node {
 
 	return root
 }
+
+// BFS 优化:
+// 上面的代码是一个标准 BFS 解题模板，但是美中不足的是，每次遍历过程中都设计到队列元素的不断入队 + 出队操作，性能稍微有点弱，
+// 但其实还有一个更高效的方法:
+// 根据题目要求，树的每一层的各个节点连接起来之后正好是一个链表结构，所以在每一层的遍历过程中，
+// 只需要用一个 “哨兵” 节点将 **下一层的各个节点连接起来** 就可以了
 
 func connectBFSOpt(root *Node) *Node {
 	if root == nil {
