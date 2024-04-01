@@ -42,11 +42,14 @@ func lengthOfLongestSubstring(s string) int {
 	for left, right := 0, 0; right < n; right++ {
 		c := s[right]
 		win[c]++
+
+		// 遇到重复的字符时，开始收缩窗口大小
 		for win[c] > 1 {
-			d := s[left]
+			win[s[left]]--
 			left++
-			win[d]--
 		}
+
+		// 更新已知的最大窗口
 		res = max(res, right-left+1)
 	}
 
