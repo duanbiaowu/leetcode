@@ -11,10 +11,15 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 		return nil
 	}
 
+	// 前序遍历数组的第一个元素就是根节点
 	root := &TreeNode{Val: preorder[0]}
 	for i := range inorder {
+		// 找到中序遍历数组中根节点的值对应的索引
+		// 并根据索引将数组分成两个部分
 		if inorder[i] == root.Val {
+			// 左半部分就是左子树的所有节点值
 			root.Left = buildTree(preorder[1:i+1], inorder[:i])
+			// 右半部分就是右子树的所有节点值
 			root.Right = buildTree(preorder[i+1:], inorder[i+1:])
 		}
 	}

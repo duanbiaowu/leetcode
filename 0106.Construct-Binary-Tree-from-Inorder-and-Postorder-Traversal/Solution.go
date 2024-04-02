@@ -11,12 +11,18 @@ func buildTree(inorder []int, postorder []int) *TreeNode {
 		return nil
 	}
 
+	// 后序遍历数组的最后一个元素就是根节点
 	root := &TreeNode{Val: postorder[n-1]}
+	// 删除最后一个元素 (因为已使用)
 	postorder = postorder[:n-1]
 
 	for i := range inorder {
+		// 找到中序遍历数组中根节点的值对应的索引
+		// 并根据索引将数组分成两个部分
 		if inorder[i] == root.Val {
+			// 左半部分就是左子树的所有节点值
 			root.Left = buildTree(inorder[:i], postorder[:i])
+			// 右半部分就是右子树的所有节点值
 			root.Right = buildTree(inorder[i+1:], postorder[i:])
 		}
 	}
