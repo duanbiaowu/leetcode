@@ -139,6 +139,89 @@ func dumpTreeFormat(valList [][]int) {
 	}
 }
 
+func preOrderTraversal(root *TreeNode) {
+	if root != nil {
+		// 先访问根节点
+		fmt.Println(root.Val)
+		// 然后 (递归) 前序遍历左子树
+		preOrderTraversal(root.Left)
+		// 最后 (递归) 前序遍历右子树
+		preOrderTraversal(root.Right)
+	}
+}
+
+func inOrderTraversal(root *TreeNode) {
+	if root != nil {
+		// 先 (递归) 中序遍历左子树
+		inOrderTraversal(root.Left)
+		// 然后访问根节点
+		fmt.Println(root.Val)
+		// 最后 (递归) 中序遍历右子树
+		inOrderTraversal(root.Right)
+	}
+}
+
+func inOrderTraversalIteratively(root *TreeNode) []int {
+	var res []int
+	var stack []*TreeNode
+	node := root
+
+	for node != nil || len(stack) > 0 {
+		for node != nil {
+			stack = append(stack, node)
+			node = node.Left
+		}
+
+		node = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		res = append(res, node.Val)
+
+		node = node.Right
+	}
+
+	return res
+}
+
+func postOrderTraversal(root *TreeNode) {
+	if root != nil {
+		// 先 (递归) 后序遍历左子树
+		postOrderTraversal(root.Left)
+		// 然后 (递归) 后序遍历右子树
+		postOrderTraversal(root.Right)
+		// 最后访问根节点
+		fmt.Println(root.Val)
+	}
+}
+
+func postOrderTraversalIteratively(root *TreeNode) []int {
+	// 通过lastVisit标识右子节点是否已经弹出
+	if root == nil {
+		return nil
+	}
+	result := make([]int, 0)
+	stack := make([]*TreeNode, 0)
+	var lastVisit *TreeNode
+	for root != nil || len(stack) != 0 {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
+		}
+		// 这里先看看，先不弹出
+		node := stack[len(stack)-1]
+		// 根节点必须在右节点弹出之后，再弹出
+		if node.Right == nil || node.Right == lastVisit {
+			stack = stack[:len(stack)-1] // pop
+			result = append(result, node.Val)
+			// 标记当前这个节点已经弹出过
+			lastVisit = node
+		} else {
+			root = node.Right
+		}
+	}
+	return result
+}
+
 type BST struct {
 	root *TreeNode
 }

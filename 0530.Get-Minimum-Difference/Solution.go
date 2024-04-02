@@ -36,6 +36,38 @@ func dfs(root *TreeNode, res, prev *int) {
 	dfs(root.Right, res, prev)
 }
 
+func getMinimumDifference2(root *TreeNode) int {
+	vals := inorderTraversal(root)
+	if len(vals) == 0 {
+		return -1
+	}
+
+	minDiff := math.MaxInt64
+	for i := 1; i < len(vals); i++ {
+		minDiff = min(minDiff, vals[i]-vals[i-1])
+	}
+
+	return minDiff
+}
+
+func inorderTraversal(root *TreeNode) []int {
+	var res []int
+	var stack []*TreeNode
+	node := root
+	for node != nil || len(stack) > 0 {
+		for node != nil {
+			stack = append(stack, node)
+			node = node.Left
+		}
+		node = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		res = append(res, node.Val)
+		node = node.Right
+	}
+
+	return res
+}
+
 func min(x, y int) int {
 	if x < y {
 		return x
