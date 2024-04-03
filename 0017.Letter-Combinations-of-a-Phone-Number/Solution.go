@@ -22,13 +22,13 @@ func backtrackLetterCombinations(digits string) []string {
 	return res
 }
 
-func backtrack(digits string, res *[]string, str string, start int) {
-	if start == len(digits) {
+func backtrack(digits string, res *[]string, str string, begin int) {
+	if begin == len(digits) {
 		*res = append(*res, str)
 	} else {
-		strMap := letterArray[digits[start]-'2']
-		for i := 0; i < len(strMap); i++ {
-			backtrack(digits, res, str+string(strMap[i]), start+1)
+		strMap := letterArray[digits[begin]-'2']
+		for i := range strMap {
+			backtrack(digits, res, str+string(strMap[i]), begin+1)
 		}
 	}
 }
@@ -51,12 +51,14 @@ func dfsLetterCombinations(digits string) []string {
 	if len(digits) == 1 {
 		return letterMap[digits[0]]
 	}
-	var res []string
+
+	res := []string{}
 	for _, c1 := range letterMap[digits[0]] {
 		for _, c2 := range dfsLetterCombinations(digits[1:]) {
 			res = append(res, c1+c2)
 		}
 	}
+
 	return res
 }
 
@@ -66,18 +68,16 @@ func bfsLetterCombinations(digits string) []string {
 	}
 
 	res := letterMap[digits[0]]
-	index := 1
-	var queue []string
-	for index < len(digits) {
+	for index := 1; index < len(digits); index++ {
+		queue := []string{}
+
 		for _, c1 := range res {
 			for _, c2 := range letterMap[digits[index]] {
 				queue = append(queue, c1+c2)
 			}
 		}
-		res = queue
 
-		queue = []string{}
-		index++
+		res = queue
 	}
 
 	return res
