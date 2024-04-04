@@ -26,3 +26,25 @@ func backtrack(nums []int, path *[]int, visited *[]bool, res *[][]int) {
 		}
 	}
 }
+
+func permuteDFS(nums []int) [][]int {
+	var res [][]int
+
+	var dfs func(index int)
+	dfs = func(index int) {
+		if index == len(nums)-1 {
+			res = append(res, append([]int{}, nums...))
+			return
+		}
+
+		for i := index; i < len(nums); i++ {
+			nums[i], nums[index] = nums[index], nums[i]
+			dfs(index + 1)
+			nums[i], nums[index] = nums[index], nums[i]
+		}
+	}
+
+	dfs(0)
+
+	return res
+}

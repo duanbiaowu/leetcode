@@ -33,3 +33,27 @@ func backtrack(candidates []int, target, begin int, path *[]int, res *[][]int) {
 		*path = (*path)[:len(*path)-1]
 	}
 }
+
+// 实现略微臃肿
+// 递归过程中传递 “当前累积和 sum”
+func backtrack2(candidates []int, target, sum, begin int, path *[]int, res *[][]int) {
+	// 剪枝
+	if sum > target {
+		return
+	}
+	if sum == target {
+		*res = append(*res, append([]int{}, *path...))
+		return
+	}
+
+	for i := begin; i < len(candidates); i++ {
+		// 剪枝
+		if candidates[i] > target {
+			return
+		}
+
+		*path = append(*path, candidates[i])
+		backtrack2(candidates, target, sum+candidates[i], i, path, res)
+		*path = (*path)[:len(*path)-1]
+	}
+}

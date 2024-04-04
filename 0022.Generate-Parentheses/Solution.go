@@ -1,26 +1,28 @@
 package leetcode
 
 // simple solution
-//func generateParenthesis(n int) []string {
-//	if n <= 0 {
-//		return []string{}
-//	}
-//	var res []string
-//	generateAll(make([]byte, n*2), 0, &res)
-//	return res
-//}
-
-func generateAll(current []byte, index int, res *[]string) {
-	if index == len(current) {
-		if isValid(current) {
-			*res = append(*res, string(current))
-		}
-	} else {
-		current[index] = '('
-		generateAll(current, index+1, res)
-		current[index] = ')'
-		generateAll(current, index+1, res)
+func generateParenthesisSimple(n int) []string {
+	if n <= 0 {
+		return []string{}
 	}
+
+	var res []string
+	generateAll(make([]byte, n<<1), 0, &res)
+	return res
+}
+
+func generateAll(parenthesis []byte, index int, res *[]string) {
+	if index == len(parenthesis) {
+		if isValid(parenthesis) {
+			*res = append(*res, string(parenthesis))
+		}
+		return
+	}
+
+	parenthesis[index] = '('
+	generateAll(parenthesis, index+1, res)
+	parenthesis[index] = ')'
+	generateAll(parenthesis, index+1, res)
 }
 
 func isValid(current []byte) bool {
