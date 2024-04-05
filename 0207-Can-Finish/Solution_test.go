@@ -42,7 +42,7 @@ func Test_canFinish(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := canFinish2(tt.args.numCourses, tt.args.prerequisites); got != tt.want {
+			if got := canFinish(tt.args.numCourses, tt.args.prerequisites); got != tt.want {
 				t.Errorf("canFinish() = %v, want %v", got, tt.want)
 			}
 		})
