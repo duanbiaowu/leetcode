@@ -38,35 +38,48 @@ func maximalSquareSample(matrix [][]byte) int {
 	var res int
 	rows, cols := len(matrix), len(matrix[0])
 
+	// 按照矩阵逐个元素遍历
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
 			if matrix[i][j] == '0' {
 				continue
 			}
 
-			// 以当前坐标为坐上角，检测最大正方形的边长
-			// 边长从 1 开始递增
-			length := 1
-
-			flag := true
-			for step := 2; i+step <= rows && j+step <= cols; step++ {
-				for i2 := 0; i2 < step && flag; i2++ {
-					for j2 := 0; j2 < step && flag; j2++ {
-						if matrix[i+i2][j+j2] == '0' {
-							flag = false
-						}
-					}
-				}
-				if flag {
-					length = step
-				}
-			}
-
-			res = max(res, length*length)
+			// 以当前坐标作为矩形左上角，检测最大正方形的边长
+			// 更新已知的最大正方形面积
+			res = max(res, maxArea(matrix, i, j))
 		}
 	}
 
 	return res
+}
+
+func maxArea(matrix [][]byte, x, y int) int {
+	rows, cols := len(matrix), len(matrix[0])
+
+	curLength := 1
+
+	// 边长从 2 开始递增
+	for length := 2; x+length <= rows && y+length <= cols; length++ {
+		for i := 0; i < length; i++ {
+			// 如果当前 “新的正方形” 中右侧的元素包含 0
+			// 直接返回对应的面积
+			if matrix[x+i][y+curLength] == '0' {
+				return curLength * curLength
+			}
+		}
+		for i := 0; i < length; i++ {
+			// 如果当前 “新的正方形” 中底侧的元素包含 0
+			// 直接返回对应的面积
+			if matrix[x+curLength][y+i] == '0' {
+				return curLength * curLength
+			}
+		}
+
+		curLength = length
+	}
+
+	return curLength * curLength
 }
 
 func max(a, b int) int {
