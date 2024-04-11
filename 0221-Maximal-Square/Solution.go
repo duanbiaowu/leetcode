@@ -15,12 +15,11 @@ func maximalSquare(matrix [][]byte) int {
 
 	for i := 1; i <= m; i++ {
 		dp[i] = make([]int, n+1)
+
 		for j := 1; j <= n; j++ {
 			if matrix[i-1][j-1] == '1' {
 				dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])
-				if maxSide < dp[i][j] {
-					maxSide = dp[i][j]
-				}
+				maxSide = max(maxSide, dp[i][j])
 			}
 		}
 	}
@@ -28,14 +27,14 @@ func maximalSquare(matrix [][]byte) int {
 	return maxSide * maxSide
 }
 
-// 暴力法 (超时)
+// 暴力搜索迭代版本 (超时)
 // 超时原因: 重复检测
-func maximalSquareSample(matrix [][]byte) int {
+func maximalSquareBruteForce(matrix [][]byte) int {
 	if len(matrix) == 0 {
 		return 0
 	}
 
-	var res int
+	var maxSide int
 	rows, cols := len(matrix), len(matrix[0])
 
 	// 按照矩阵逐个元素遍历
@@ -47,39 +46,127 @@ func maximalSquareSample(matrix [][]byte) int {
 
 			// 以当前坐标作为矩形左上角，检测最大正方形的边长
 			// 更新已知的最大正方形面积
-			res = max(res, maxArea(matrix, i, j))
+			maxSide = max(maxSide, search(matrix, i, j))
 		}
 	}
 
-	return res
+	return maxSide * maxSide
 }
 
-func maxArea(matrix [][]byte, x, y int) int {
+// 搜索以当前坐标 [x, y] 为左上角的最大正方形边长
+func search(matrix [][]byte, x, y int) int {
 	rows, cols := len(matrix), len(matrix[0])
 
-	curLength := 1
+	curSide := 1
 
 	// 边长从 2 开始递增
 	for length := 2; x+length <= rows && y+length <= cols; length++ {
 		for i := 0; i < length; i++ {
 			// 如果当前 “新的正方形” 中右侧的元素包含 0
-			// 直接返回对应的面积
-			if matrix[x+i][y+curLength] == '0' {
-				return curLength * curLength
+			// 直接返回对应的边长
+			if matrix[x+i][y+curSide] == '0' {
+				return curSide
 			}
 		}
 		for i := 0; i < length; i++ {
 			// 如果当前 “新的正方形” 中底侧的元素包含 0
-			// 直接返回对应的面积
-			if matrix[x+curLength][y+i] == '0' {
-				return curLength * curLength
+			// 直接返回对应的边长
+			if matrix[x+curSide][y+i] == '0' {
+				return curSide
 			}
 		}
 
-		curLength = length
+		curSide = length
 	}
 
-	return curLength * curLength
+	return curSide
+}
+
+// 暴力搜索递归版本 (超时)
+// 超时原因: 重复检测
+func maximalSquareBruteForceRecursive(matrix [][]byte) int {
+	if len(matrix) == 0 {
+		return 0
+	}
+
+	m, n := len(matrix), len(matrix[0])
+	maxSide := 0
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			maxSide = max(maxSide, searchRecursive(matrix, i, j))
+		}
+	}
+
+	return maxSide * maxSide
+}
+
+// 搜索以当前坐标 [x, y] 为左上角的最大正方形边长
+func searchRecursive(matrix [][]byte, x, y int) int {
+	if x >= len(matrix) || y >= len(matrix[0]) {
+		return 0
+	}
+	if matrix[x][y] == '0' {
+		return 0
+	}
+
+	// 搜索以 [当前坐标的底侧元素] 为坐标 的最大正常形边长
+	down := searchRecursive(matrix, x+1, y)
+	// 搜索以 [当前坐标的右侧元素] 为坐标 的最大正常形边长
+	right := searchRecursive(matrix, x, y+1)
+	// 搜索以 [当前坐标的右下侧元素] 为坐标 的最大正常形边长
+	diag := searchRecursive(matrix, x+1, y+1)
+
+	return 1 + min(down, right, diag)
+}
+
+// 记忆化搜索
+func maximalSquareMemo(matrix [][]byte) int {
+	if len(matrix) == 0 {
+		return 0
+	}
+
+	m, n := len(matrix), len(matrix[0])
+	memo := make([][]int, m)
+	for i := range memo {
+		memo[i] = make([]int, n)
+	}
+
+	maxSide := 0
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			maxSide = max(maxSide, searchMemo(matrix, i, j, memo))
+		}
+	}
+
+	return maxSide * maxSide
+}
+
+func searchMemo(matrix [][]byte, x, y int, memo [][]int) int {
+	if x >= len(matrix) || y >= len(matrix[0]) {
+		return 0
+	}
+	if matrix[x][y] == '0' {
+		return 0
+	}
+
+	// 如果备忘录中已经包含 [当前坐标] 的边长
+	// 直接返回
+	if memo[x][y] != 0 {
+		return memo[x][y]
+	}
+
+	// 搜索以 [当前坐标的底侧元素] 为坐标 的最大正常形边长
+	down := searchMemo(matrix, x+1, y, memo)
+	// 搜索以 [当前坐标的右侧元素] 为坐标 的最大正常形边长
+	right := searchMemo(matrix, x, y+1, memo)
+	// 搜索以 [当前坐标的右下侧元素] 为坐标 的最大正常形边长
+	diag := searchMemo(matrix, x+1, y+1, memo)
+
+	// 更新备忘录中 [当前坐标] 的边长
+	memo[x][y] = 1 + min(down, right, diag)
+
+	return memo[x][y]
 }
 
 func max(a, b int) int {
