@@ -1,5 +1,7 @@
 package leetcode
 
+import "fmt"
+
 func lengthOfLIS(nums []int) int {
 	n := len(nums)
 	if n == 0 {
@@ -44,6 +46,96 @@ func lengthOfLIS2(nums []int) int {
 	}
 
 	return res
+}
+
+// 说明：
+// 使用单纯的暴力法无法解题
+// 因为会遇到边界情况 (边界情况建模)
+// 边界情况测试用例
+// 需要转换到回溯法
+func lengthOfLISBruteForce(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+
+	res := 0
+	for i := 0; i < n; i++ {
+		// 当前
+		curNum := nums[i]
+		curLen := 1
+
+		fmt.Println(curNum, curLen)
+
+		for j := i + 1; j < n; j++ {
+			if nums[j] > curNum {
+				curNum = nums[j]
+				curLen++
+			}
+		}
+
+		fmt.Println(curNum, curLen)
+		fmt.Println()
+
+		res = max(res, curLen)
+	}
+
+	return res
+}
+
+func lengthOfLISBruteForce2(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+
+	res := 0
+	for i := n - 1; i >= 0; i-- {
+		// 当前
+		curNum := nums[i]
+		curLen := 1
+
+		fmt.Println(curNum, curLen)
+
+		for j := i - 1; j >= 0; j-- {
+			if curNum > nums[j] {
+				curNum = nums[j]
+				curLen++
+			}
+			fmt.Println(curNum, curLen)
+		}
+
+		fmt.Println(curNum, curLen)
+		fmt.Println()
+
+		res = max(res, curLen)
+	}
+
+	return res
+}
+
+// 试图转换成对应的迭代版本代码
+func lengthOfLIS3(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+	maxLen := 1
+	for i := 0; i < len(nums); i++ {
+		maxLen = max(maxLen, findLIS(nums, i, nums[i], 1))
+	}
+	return maxLen
+}
+
+func findLIS(nums []int, begin, prev, curLen int) int {
+	if begin == len(nums) {
+		return curLen
+	}
+	includedLen := curLen
+	if nums[begin] > prev {
+		includedLen = findLIS(nums, begin+1, nums[begin], curLen+1)
+	}
+	notIncludedLen := findLIS(nums, begin+1, prev, curLen)
+	return max(includedLen, notIncludedLen)
 }
 
 func max(x, y int) int {
