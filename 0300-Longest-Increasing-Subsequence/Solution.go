@@ -1,7 +1,5 @@
 package leetcode
 
-import "fmt"
-
 func lengthOfLIS(nums []int) int {
 	n := len(nums)
 	if n == 0 {
@@ -48,12 +46,12 @@ func lengthOfLIS2(nums []int) int {
 	return res
 }
 
-// 说明：
-// 使用单纯的暴力法无法解题
-// 因为会遇到边界情况 (边界情况建模)
-// 边界情况测试用例
+// 直观而错误的题解
+// 备注：
+// 因为会遇到边界情况
+// 边界情况测试用例 {0, 1, 0, 3, 2, 3}
 // 需要转换到回溯法
-func lengthOfLISBruteForce(nums []int) int {
+func lengthOfLISError(nums []int) int {
 	n := len(nums)
 	if n == 0 {
 		return 0
@@ -61,81 +59,97 @@ func lengthOfLISBruteForce(nums []int) int {
 
 	res := 0
 	for i := 0; i < n; i++ {
-		// 当前
 		curNum := nums[i]
-		curLen := 1
-
-		fmt.Println(curNum, curLen)
+		maxLen := 1
 
 		for j := i + 1; j < n; j++ {
 			if nums[j] > curNum {
 				curNum = nums[j]
-				curLen++
+				maxLen++
 			}
 		}
 
-		fmt.Println(curNum, curLen)
-		fmt.Println()
-
-		res = max(res, curLen)
+		res = max(res, maxLen)
 	}
 
 	return res
 }
 
-func lengthOfLISBruteForce2(nums []int) int {
-	n := len(nums)
-	if n == 0 {
-		return 0
-	}
+// 从数组中的每个元素开始，尝试找出以该元素开头的所有递增子序列
+// 对于每个元素，可以选择将其包含在递增子序列中或者不包含，因此可以通过递归实现
+// 在递归的过程中，记录当前递增子序列的长度，并更新最长递增子序列的长度
 
-	res := 0
-	for i := n - 1; i >= 0; i-- {
-		// 当前
-		curNum := nums[i]
-		curLen := 1
-
-		fmt.Println(curNum, curLen)
-
-		for j := i - 1; j >= 0; j-- {
-			if curNum > nums[j] {
-				curNum = nums[j]
-				curLen++
-			}
-			fmt.Println(curNum, curLen)
-		}
-
-		fmt.Println(curNum, curLen)
-		fmt.Println()
-
-		res = max(res, curLen)
-	}
-
-	return res
-}
-
-// 试图转换成对应的迭代版本代码
-func lengthOfLIS3(nums []int) int {
+// 暴力搜索迭代版本 (超时)
+// 超时原因: 重复检测
+func lengthOfLISBruteForce(nums []int) int {
 	if len(nums) == 0 {
 		return 0
 	}
+
 	maxLen := 1
-	for i := 0; i < len(nums); i++ {
-		maxLen = max(maxLen, findLIS(nums, i, nums[i], 1))
-	}
+	backtrack(nums, -1, 0, &maxLen)
+
 	return maxLen
 }
 
-func findLIS(nums []int, begin, prev, curLen int) int {
-	if begin == len(nums) {
-		return curLen
+// 回溯穷举每个元素开头的所有递增子序列
+// prev: 上个元素的索引
+// cur:  当前元素的索引
+func backtrack(nums []int, prev, cur int, maxLen *int) int {
+	if cur == len(nums) {
+		return 0
 	}
-	includedLen := curLen
-	if nums[begin] > prev {
-		includedLen = findLIS(nums, begin+1, nums[begin], curLen+1)
+
+	taken := 0
+	if prev == -1 || nums[cur] > nums[prev] {
+		// 计算将当前元素包含在子序列中时
+		// 可以获得的最大递增子序列长度
+		taken = 1 + backtrack(nums, cur, cur+1, maxLen)
 	}
-	notIncludedLen := findLIS(nums, begin+1, prev, curLen)
-	return max(includedLen, notIncludedLen)
+	// 计算跳过当前元素时 (也就是不将当前元素包含在子序列中)
+	// 可以获得的最大递增子序列长度
+	notTaken := backtrack(nums, prev, cur+1, maxLen)
+
+	// 更新已知的最大递增子序列长度
+	*maxLen = max(*maxLen, max(taken, notTaken))
+
+	return max(taken, notTaken)
+}
+
+func lengthOfLISMemo(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	memo := make([][]int, len(nums))
+	for i := range memo {
+		memo[i] = make([]int, len(nums)+1)
+		for j := range memo[i] {
+			memo[i][j] = -1
+		}
+	}
+
+	return backtrackMemo(nums, -1, 0, memo)
+}
+
+func backtrackMemo(nums []int, prev, cur int, memo [][]int) int {
+	// 递归结束条件
+	if cur == len(nums) {
+		return 0
+	}
+	if memo[prev+1][cur] != -1 {
+		return memo[prev+1][cur]
+	}
+
+	taken := 0
+	if prev == -1 || nums[cur] > nums[prev] {
+		taken = 1 + backtrackMemo(nums, cur, cur+1, memo)
+	}
+	notTaken := backtrackMemo(nums, prev, cur+1, memo)
+
+	memo[prev+1][cur] = max(taken, notTaken)
+
+	return memo[prev+1][cur]
 }
 
 func max(x, y int) int {
