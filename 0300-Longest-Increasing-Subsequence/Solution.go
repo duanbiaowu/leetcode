@@ -6,19 +6,23 @@ func lengthOfLIS(nums []int) int {
 		return 0
 	}
 
-	res := 0
+	maxLen := 0
 	// dp[i] 的值代表以 nums[i] 结尾的最长子序列长度
 	dp := make([]int, n)
+
 	for i := 0; i < n; i++ {
+		// 默认为 1
 		dp[i] = 1
+
 		for j := 0; j < i; j++ {
 			if nums[j] < nums[i] {
 				dp[i] = max(dp[i], dp[j]+1)
 			}
 		}
-		res = max(res, dp[i])
+		maxLen = max(maxLen, dp[i])
 	}
-	return res
+
+	return maxLen
 }
 
 // reference: https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/
@@ -121,6 +125,13 @@ func lengthOfLISMemo(nums []int) int {
 		return 0
 	}
 
+	// 初始化备忘录
+	// 所有值设置为 -1
+	// 表示当前元素组合还未被检测
+	// 使用一个二维数组来表示 HashMap
+	// 其中 memo[i][j] 表示:
+	//    i = 参数 prev + 1 (prev 从 -1 开始)
+	//    j = 参数 cur
 	memo := make([][]int, len(nums))
 	for i := range memo {
 		memo[i] = make([]int, len(nums)+1)
@@ -137,16 +148,24 @@ func backtrackMemo(nums []int, prev, cur int, memo [][]int) int {
 	if cur == len(nums) {
 		return 0
 	}
+
+	// 如果备忘录中已经包含 [当前元素组合]
+	// 直接返回
 	if memo[prev+1][cur] != -1 {
 		return memo[prev+1][cur]
 	}
 
 	taken := 0
 	if prev == -1 || nums[cur] > nums[prev] {
+		// 计算将当前元素包含在子序列中时
+		// 可以获得的最大递增子序列长度
 		taken = 1 + backtrackMemo(nums, cur, cur+1, memo)
 	}
+	// 计算跳过当前元素时 (也就是不将当前元素包含在子序列中)
+	// 可以获得的最大递增子序列长度
 	notTaken := backtrackMemo(nums, prev, cur+1, memo)
 
+	// 更新备忘录中 [当前元素组合] 的值
 	memo[prev+1][cur] = max(taken, notTaken)
 
 	return memo[prev+1][cur]
