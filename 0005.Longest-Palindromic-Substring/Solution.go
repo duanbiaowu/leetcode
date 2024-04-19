@@ -136,8 +136,9 @@ func expandAroundCenterCount(s string, left, right int) int {
 }
 
 // DP
-func longestPalindrome2(s string) string {
-	if len(s) <= 1 {
+func longestPalindromeDP(s string) string {
+	n := len(s)
+	if n <= 1 {
 		return s
 	}
 
@@ -145,12 +146,11 @@ func longestPalindrome2(s string) string {
 	begin := 0
 	// 最大回文长度, 通过起始位置+长度, 可以直接返回结果
 	maxLen := 1
-	n := len(s)
 
 	// dp[i][j] 表示 s[i..j] 是否是回文串
 	dp := [][]bool{}
 	for i := 0; i < n; i++ {
-		dp = append(dp, make([]bool, n+1))
+		dp = append(dp, make([]bool, n))
 	}
 
 	// 初始化：所有长度为 1 的子串都是回文串
@@ -181,10 +181,10 @@ func longestPalindrome2(s string) string {
 			}
 
 			// 只要 dp[i][j] == true 成立，就表示子串 s[i..j] 是回文
-			// 更新回文长度和起始位置
+			// 更新最大回文长度和最大回文起始位置
 			if dp[i][j] && j-i+1 > maxLen {
-				maxLen = j - i + 1
 				begin = i
+				maxLen = j - i + 1
 			}
 		}
 	}
