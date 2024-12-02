@@ -1,25 +1,91 @@
 package leetcode
 
-// 暴力解法(不会超时)
-//func longestPalindrome(s string) string {
-//	if len(s) <= 1 {
-//		return s
-//	}
-//
-//	res := ""
-//	maxLength := 0
-//
-//	for i := 0; i < len(s); i++ {
-//		for j := len(s); j > i+maxLength; j-- {
-//			if isPalindrome(s[i:j]) && j-i > maxLength {
-//				maxLength = j-i
-//				res = s[i:j]
-//			}
-//		}
-//	}
-//
-//	return res
-//}
+// 暴力搜索(不会超时)
+func longestPalindromeBruteForce(s string) string {
+	if len(s) <= 1 {
+		return s
+	}
+
+	res := ""
+	maxLen := 0
+
+	for i := 0; i < len(s); i++ {
+		// 从当前字符开始，直到字符串结尾
+		// 检测可以形成的最大回文字符串长度
+		for j := len(s); j > i+maxLen; j-- {
+			if isPalindrome(s[i:j]) && j-i > maxLen {
+				maxLen = j - i
+				res = s[i:j]
+			}
+		}
+	}
+
+	return res
+}
+
+func isPalindrome(s string) bool {
+	n := len(s)
+	for i := 0; i < n>>1; i++ {
+		if s[i] != s[n-i-1] {
+			return false
+		}
+	}
+
+	return true
+}
+
+// 记忆化搜索
+func longestPalindromeMemo(s string) string {
+	n := len(s)
+	if n <= 1 {
+		return s
+	}
+
+	res := ""
+	maxLen := 0
+
+	// -1: 初始状态
+	// 0: 表示 s[i:j] 不是回文串
+	// 1: 表示 s[i:j] 是回文串
+	memo := make([][]int, n)
+	for i := range memo {
+		memo[i] = make([]int, n)
+		for j := range memo[i] {
+			memo[i][j] = -1
+		}
+	}
+
+	for i := 0; i < n; i++ {
+		for j := len(s); j > i+maxLen; j-- {
+			if isPalindromeMemo(s, i, j-1, memo) > 0 && j-i > maxLen {
+				maxLen = j - i
+				res = s[i:j]
+			}
+		}
+	}
+
+	return res
+}
+
+// 记忆化检测回文字符串
+func isPalindromeMemo(s string, i, j int, memo [][]int) int {
+	if i == j {
+		return 1
+	}
+	if memo[i][j] != -1 {
+		// 代码不会执行到这里
+		return memo[i][j]
+	}
+
+	// 默认 s[i:j] 不是回文字符串
+	memo[i][j] = 0
+
+	if s[i] == s[j] && (j-i <= 1 || isPalindromeMemo(s, i+1, j-1, memo) > 0) {
+		memo[i][j] = 1
+	}
+
+	return memo[i][j]
+}
 
 // 中心扩展(利用回文串性质)
 //func longestPalindrome(s string) string {
@@ -70,21 +136,21 @@ func expandAroundCenterCount(s string, left, right int) int {
 }
 
 // DP
-func longestPalindrome2(s string) string {
-	if len(s) <= 1 {
+func longestPalindromeDP(s string) string {
+	n := len(s)
+	if n <= 1 {
 		return s
 	}
 
-	// 回文起始位置
+	// 最大回文起始位置
 	begin := 0
-	// 回文长度, 通过起始位置+长度, 可以直接返回结果
+	// 最大回文长度, 通过起始位置+长度, 可以直接返回结果
 	maxLen := 1
-	n := len(s)
 
 	// dp[i][j] 表示 s[i..j] 是否是回文串
 	dp := [][]bool{}
 	for i := 0; i < n; i++ {
-		dp = append(dp, make([]bool, n+1))
+		dp = append(dp, make([]bool, n))
 	}
 
 	// 初始化：所有长度为 1 的子串都是回文串
@@ -115,10 +181,10 @@ func longestPalindrome2(s string) string {
 			}
 
 			// 只要 dp[i][j] == true 成立，就表示子串 s[i..j] 是回文
-			// 更新回文长度和起始位置
+			// 更新最大回文长度和最大回文起始位置
 			if dp[i][j] && j-i+1 > maxLen {
-				maxLen = j - i + 1
 				begin = i
+				maxLen = j - i + 1
 			}
 		}
 	}
@@ -132,17 +198,6 @@ func expandAroundCenter(s string, left, right int) (int, int) {
 		right++
 	}
 	return left + 1, right - 1
-}
-
-func isPalindrome(s string) bool {
-	n := len(s)
-	for i := 0; i < n>>1; i++ {
-		if s[i] != s[n-i-1] {
-			return false
-		}
-	}
-
-	return true
 }
 
 func max(x, y int) int {
