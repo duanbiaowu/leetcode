@@ -52,6 +52,11 @@ func Test_isAnagram(t *testing.T) {
 			args{"anagram", "nagaram"},
 			true,
 		},
+		{
+			"test-9",
+			args{"aacc", "ccac"},
+			false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

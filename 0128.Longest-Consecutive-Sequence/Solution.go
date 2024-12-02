@@ -1,5 +1,7 @@
 package leetcode
 
+import "sort"
+
 // 第一时间想到的是 Sort, 然后计算最长序列
 // 但题目要求时间复杂度为：O(N)
 // 空间换时间
@@ -37,4 +39,31 @@ func longestConsecutive(nums []int) int {
 	}
 
 	return longest
+}
+
+func longestConsecutive2(nums []int) int {
+	if len(nums) < 2 {
+		return len(nums)
+	}
+
+	sort.Ints(nums)
+
+	maxLen := 1
+	curLen := 1
+	for i := 1; i < len(nums); i++ {
+		if nums[i] == nums[i-1] {
+			continue
+		}
+		if nums[i]-nums[i-1] == 1 {
+			curLen++
+		} else {
+			curLen = 1
+		}
+
+		if curLen > maxLen {
+			maxLen = curLen
+		}
+	}
+
+	return maxLen
 }
