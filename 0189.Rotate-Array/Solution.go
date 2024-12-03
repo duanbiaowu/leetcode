@@ -9,8 +9,8 @@ func rotate(nums []int, k int) {
 	}
 }
 
-func reverse(a []int) {
-	for i, n := 0, len(a); i < n>>1; i++ {
-		a[i], a[n-1-i] = a[n-1-i], a[i]
+func reverse(nums []int) {
+	for left, right := 0, len(nums); left < right>>1; left++ {
+		nums[left], nums[right-1-left] = nums[right-1-left], nums[left]
 	}
 }

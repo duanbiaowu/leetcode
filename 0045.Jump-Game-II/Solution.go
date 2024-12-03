@@ -1,16 +1,17 @@
 package leetcode
 
 func jump(nums []int) int {
-	n := len(nums) - 1
-	maxPosition, end := 0, 0
 	steps := 0
-	for i := 0; i < n; i++ {
-		maxPosition = max(maxPosition, i+nums[i])
-		if i == end {
-			end = maxPosition
+
+	pos, right := 0, 0
+	for i, v := range nums[:len(nums)-1] {
+		pos = max(pos, i+v)
+		if i == right {
+			right = pos
 			steps++
 		}
 	}
+
 	return steps
 }
 
