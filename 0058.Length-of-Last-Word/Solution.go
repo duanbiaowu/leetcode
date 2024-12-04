@@ -1,18 +1,20 @@
 package leetcode
 
 func lengthOfLastWord(s string) int {
-	index := len(s) - 1
-	if index < 0 {
+	tail := len(s) - 1
+	if tail < 0 {
 		return 0
 	}
 
-	res := 0
-	for s[index] == ' ' {
-		index--
+	length := 0
+
+	for s[tail] == ' ' {
+		tail--
 	}
-	for index >= 0 && s[index] != ' ' {
-		res++
-		index--
+	for tail >= 0 && s[tail] != ' ' {
+		tail--
+		length++
 	}
-	return res
+
+	return length
 }

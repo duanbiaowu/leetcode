@@ -1,6 +1,8 @@
 package leetcode
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_longestCommonPrefix(t *testing.T) {
 	type args struct {
@@ -28,28 +30,28 @@ func Test_longestCommonPrefix(t *testing.T) {
 		},
 
 		{
-			"No1. test common prefix is only one character",
+			"No4. test common prefix is only one character",
 			args{[]string{"bug", "banana", "bus"}},
 			"b",
 		},
 		{
-			"No2. test common prefix is only one character",
+			"No5. test common prefix is only one character",
 			args{[]string{"after", "a", "abs"}},
 			"a",
 		},
 		{
-			"No3. test common prefix is only one character",
+			"No6. test common prefix is only one character",
 			args{[]string{"c"}},
 			"c",
 		},
 
 		{
-			"No.1 test common prefix contains multiple characters",
+			"No7. test common prefix contains multiple characters",
 			args{[]string{"flower", "flow", "flight"}},
 			"fl",
 		},
 		{
-			"No.2 test common prefix contains multiple characters",
+			"No8. test common prefix contains multiple characters",
 			args{[]string{"go", "golang", "gopher"}},
 			"go",
 		},

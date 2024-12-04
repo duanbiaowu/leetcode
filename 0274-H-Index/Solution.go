@@ -25,3 +25,14 @@ func hIndex(citations []int) int {
 	}
 	return n - low
 }
+
+func hIndex2(citations []int) int {
+	sort.Ints(citations)
+
+	h := 0
+	for i := len(citations) - 1; i >= 0 && citations[i] > h; i-- {
+		h++
+	}
+
+	return h
+}
