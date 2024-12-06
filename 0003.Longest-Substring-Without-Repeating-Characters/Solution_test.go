@@ -1,6 +1,8 @@
 package leetcode
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_lengthOfLongestSubstring(t *testing.T) {
 	type args struct {

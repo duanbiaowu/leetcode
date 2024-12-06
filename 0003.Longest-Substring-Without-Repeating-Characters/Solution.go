@@ -14,6 +14,28 @@ package leetcode
 //	return res
 //}
 
+// 暴力解法2 (不超时)
+// func lengthOfLongestSubstringSlow(s string) int {
+// 	longest := 0
+// 	n := len(s)
+
+// 	for i := 0; i < n; i++ {
+// 		set := make(map[byte]struct{})
+
+// 		for j := i; j < n; j++ {
+// 			if _, ok := set[s[j]]; ok {
+// 				break
+// 			}
+
+// 			set[s[j]] = struct{}{}
+// 		}
+
+// 		longest = max(longest, len(set))
+// 	}
+
+// 	return longest
+// }
+
 // 滑动窗口-1
 //func lengthOfLongestSubstring(s string) int {
 //	var charIndex [256]int

@@ -2,13 +2,17 @@ package leetcode
 
 func isSubsequence(s string, t string) bool {
 	sLen, tLen := len(s), len(t)
-	slow, fast := 0, 0
-
-	for slow < sLen && fast < tLen {
-		if s[slow] == t[fast] {
-			slow++
-		}
-		fast++
+	if sLen > tLen {
+		return false
 	}
-	return slow == sLen
+
+	sp, tp := 0, 0
+	for sp < sLen && tp < tLen {
+		if s[sp] == t[tp] {
+			sp++
+		}
+		tp++
+	}
+
+	return sp == sLen
 }
