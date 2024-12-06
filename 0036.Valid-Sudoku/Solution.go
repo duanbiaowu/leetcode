@@ -54,6 +54,64 @@ func isValidSudokuSimply(board [][]byte) bool {
 	return true
 }
 
+func isValidSudokuSimple2(board [][]byte) bool {
+	if len(board) == 0 || len(board)%9 != 0 || len(board[0])%9 != 0 {
+		return false
+	}
+
+	rows := len(board)
+	cols := len(board[0])
+
+	// check every row
+	for _, row := range board {
+		m := make(map[byte]struct{})
+		for _, c := range row {
+			if c == '.' {
+				continue
+			}
+			if _, ok := m[c]; ok {
+				return false
+			}
+			m[c] = struct{}{}
+		}
+	}
+
+	// check every column
+	for i := 0; i < rows; i++ {
+		m := make(map[byte]struct{})
+		for j := 0; j < cols; j++ {
+			if board[j][i] == '.' {
+				continue
+			}
+			if _, ok := m[board[j][i]]; ok {
+				return false
+			}
+			m[board[j][i]] = struct{}{}
+		}
+	}
+
+	// check every 3*3
+	for i := 0; i < rows/3; i++ {
+		for j := 0; j < cols/3; j++ {
+			m := make(map[byte]struct{})
+
+			for k := i * 3; k < i*3+3; k++ {
+				for k2 := j * 3; k2 < j*3+3; k2++ {
+					if board[k][k2] == '.' {
+						continue
+					}
+					if _, ok := m[board[k][k2]]; ok {
+						return false
+					}
+					m[board[k][k2]] = struct{}{}
+				}
+			}
+		}
+	}
+
+	return true
+}
+
 // hashMap solution
 func isValidSudoku(board [][]byte) bool {
 	// 分别缓存行、列、3×3宫格
