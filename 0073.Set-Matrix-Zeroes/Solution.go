@@ -53,3 +53,34 @@ func setZeroes(matrix [][]int) {
 		}
 	}
 }
+
+// 一个简单的改进方案是使用 O(m + n) 的额外空间
+// 但这仍然不是最好的解决方案
+func setZeroesSimple(matrix [][]int) {
+	// 边界条件处理
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		return
+	}
+
+	rowMap := make(map[int]struct{})
+	colMap := make(map[int]struct{})
+
+	for i, row := range matrix {
+		for j, val := range row {
+			if val == 0 {
+				rowMap[i] = struct{}{}
+				colMap[j] = struct{}{}
+			}
+		}
+	}
+
+	for i, row := range matrix {
+		for j := range row {
+			if _, ok := rowMap[i]; ok {
+				row[j] = 0
+			} else if _, ok := colMap[j]; ok {
+				row[j] = 0
+			}
+		}
+	}
+}

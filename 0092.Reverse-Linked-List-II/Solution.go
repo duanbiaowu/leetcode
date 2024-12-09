@@ -1,6 +1,8 @@
 package leetcode
 
 import (
+	"fmt"
+
 	"github.com/duanbiaowu/leetcode/structures"
 )
 
@@ -57,4 +59,56 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
 	}
 
 	return dummy.Next
+}
+
+func reverseBetweenSimple(head *ListNode, left int, right int) *ListNode {
+	if head == nil || right < left {
+		return head
+	}
+
+	dummy := &ListNode{Next: head}
+
+	// 获取左边部分链表的最后一个节点
+	leftLast := dummy
+	for i := 0; i < left-1; i++ {
+		leftLast = leftLast.Next
+	}
+
+	// 获取右边部分的链表的头节点的上一个节点
+	// 也就是中间部分的链表的最后一个节点
+	midLast := leftLast
+	for i := 0; i < right-left+1; i++ {
+		midLast = midLast.Next
+	}
+
+	// 获取中间部分的链表的第一个节点
+	midHead := leftLast.Next
+	rightHead := midLast.Next
+
+	// 切换链表左右部分的连接，形成一个子链表
+	leftLast.Next = nil
+	midLast.Next = nil
+
+	reverseList(midHead)
+
+	// 反转之后
+	// 左边部分链表应该连接中间部分链表的最后一个节点
+	leftLast.Next = midLast
+	// 中间部分链表应该连接右边部分链表的第一个节点
+	midHead.Next = rightHead
+
+	return dummy.Next
+}
+
+func reverseList(head *ListNode) *ListNode {
+	var prev *ListNode
+
+	for head != nil {
+		next := head.Next
+		head.Next = prev
+		prev = head
+		head = next
+	}
+
+	return prev
 }
