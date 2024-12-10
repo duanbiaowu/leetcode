@@ -44,8 +44,9 @@ func convert(s string, numRows int) string {
 
 	curRow := 0
 	goingDown := false
-	for _, char := range s {
-		rows[curRow].WriteByte(byte(char))
+
+	for i := range s {
+		rows[curRow].WriteByte(s[i])
 		if curRow == 0 || curRow == numRows-1 {
 			goingDown = !goingDown
 		}

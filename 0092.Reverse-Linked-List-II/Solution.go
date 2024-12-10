@@ -1,8 +1,6 @@
 package leetcode
 
 import (
-	"fmt"
-
 	"github.com/duanbiaowu/leetcode/structures"
 )
 

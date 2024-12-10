@@ -23,7 +23,7 @@ func isValid(s string) bool {
 		} else {
 			// 右边界组的字符与栈顶元素进行比较
 			index := len(stack) - 1
-			if len(stack) == 0 || s[i] != charMap[stack[index]] {
+			if index < 0 || s[i] != charMap[stack[index]] {
 				return false
 			}
 			stack = stack[:index]
