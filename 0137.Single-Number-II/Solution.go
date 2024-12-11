@@ -1,5 +1,7 @@
 package leetcode
 
+import "sort"
+
 func singleNumber2(nums []int) int {
 	a, b := 0, 0
 	for i := 0; i < len(nums); i++ {
@@ -81,4 +83,23 @@ func singleNumberOpt2(nums []int) int {
 	}
 
 	return int(res)
+}
+
+func singleNumberSimple(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	sort.Ints(nums)
+
+	// 排序完成后
+	// 3 个数字为 1 对
+	// 如果 1 对中 3 个数字不相同，必然是第 1 个数字
+	for i := 0; i < len(nums)-1; i += 3 {
+		if nums[i] != nums[i+1] {
+			return nums[i]
+		}
+	}
+
+	return nums[len(nums)-1]
 }
