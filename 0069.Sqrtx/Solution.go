@@ -1,9 +1,11 @@
 package leetcode
 
 func mySqrt(x int) int {
-	res := x
-	for res*res > x {
-		res = (res + x/res) / 2
+	n := x
+
+	for n*n > x {
+		n = (n + x/n) >> 1
 	}
-	return res
+
+	return n
 }

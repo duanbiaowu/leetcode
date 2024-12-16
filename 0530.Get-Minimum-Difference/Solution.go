@@ -68,6 +68,14 @@ func inorderTraversal(root *TreeNode) []int {
 	return res
 }
 
+func inorderTraversal2(root *TreeNode, res *[]int) {
+	if root != nil {
+		inorderTraversal2(root.Left, res)
+		*res = append(*res, root.Val)
+		inorderTraversal2(root.Right, res)
+	}
+}
+
 func min(x, y int) int {
 	if x < y {
 		return x
