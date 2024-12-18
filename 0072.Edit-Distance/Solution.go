@@ -6,7 +6,7 @@ package leetcode
 // 3. 修改单词 word1 的一个字符
 
 // 状态方程
-// 1. dp[i][j] 表示word1的前i个字母转换成word2的前j个字母所使用的最少操作
+// 1. dp[i][j] 表示 word1 的前 i 个字母转换成 word2 的前 j 个字母所使用的最少操作
 // 2. word1[i] == word2[j]，dp[i][j] = dp[i-1][j-1]
 // 3. word1[i] != word2[j]，dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
 func minDistance(word1 string, word2 string) int {

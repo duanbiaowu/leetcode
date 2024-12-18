@@ -18,6 +18,9 @@ func maximalSquare(matrix [][]byte) int {
 
 		for j := 1; j <= n; j++ {
 			if matrix[i-1][j-1] == '1' {
+				// 如果当前坐标的值为 1
+				// 说明正方形的边长至少为 1，所以 + 1
+				// 在此基础上分别获取以 左上角、上边、左边 3 个左边为右下角坐标形成的正方形数量，并取其中的最小值 + 1
 				dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])
 				maxSide = max(maxSide, dp[i][j])
 			}

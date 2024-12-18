@@ -7,6 +7,8 @@ func lengthOfLIS(nums []int) int {
 	}
 
 	maxLen := 0
+	// 状态转移方程: dp[i] = max(dp[i], dp[j] + 1) for j in [0, i)
+	// 其中 nums[j] < nums[i]
 	// dp[i] 的值代表以 nums[i] 结尾的最长子序列长度
 	dp := make([]int, n)
 
@@ -45,35 +47,6 @@ func lengthOfLIS2(nums []int) int {
 		if hi == res {
 			res++
 		}
-	}
-
-	return res
-}
-
-// 直观而错误的题解
-// 备注：
-// 因为会遇到边界情况
-// 边界情况测试用例 {0, 1, 0, 3, 2, 3}
-// 需要转换到回溯法
-func lengthOfLISError(nums []int) int {
-	n := len(nums)
-	if n == 0 {
-		return 0
-	}
-
-	res := 0
-	for i := 0; i < n; i++ {
-		curNum := nums[i]
-		maxLen := 1
-
-		for j := i + 1; j < n; j++ {
-			if nums[j] > curNum {
-				curNum = nums[j]
-				maxLen++
-			}
-		}
-
-		res = max(res, maxLen)
 	}
 
 	return res
