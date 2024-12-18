@@ -17,6 +17,8 @@ func searchMatrix(matrix [][]int, target int) bool {
 	for low <= hi {
 		mid := low + (hi-low)>>1
 		// 将索引转换为具体的矩阵坐标
+		// mid / cols 得到 X 坐标
+		// mid % cols 得到 Y 坐标
 		val := matrix[mid/cols][mid%cols]
 
 		if val == target {

@@ -39,23 +39,24 @@ func rob2(nums []int) int {
 
 // 记忆化: 避免重复计算
 func robMemo(nums []int) int {
-	n := len(nums)
-	memo := make([]int, n)
+	memo := make([]int, len(nums))
 
 	// 备忘录金额初始化为 -1
-	for i := 0; i < n; i++ {
+	for i := range memo {
 		memo[i] = -1
 	}
 
-	return robFromMemo(nums, 0, &memo)
+	return robFromMemo(nums, 0, memo)
 }
 
-func robFromMemo(nums []int, begin int, memo *[]int) int {
+// 参数 memo 已经提前初始化&预分配完成
+// 不会再发生扩容操作，所以不需要传递切片指针类型，直接传递切片即可
+func robFromMemo(nums []int, begin int, memo []int) int {
 	if begin >= len(nums) {
 		return 0
 	}
-	if (*memo)[begin] != -1 {
-		return (*memo)[begin]
+	if memo[begin] != -1 {
+		return memo[begin]
 	}
 
 	// 偷取当前房屋
@@ -66,10 +67,10 @@ func robFromMemo(nums []int, begin int, memo *[]int) int {
 	// 去偷下一个房屋
 	skip := robFromMemo(nums, begin+1, memo)
 
-	(*memo)[begin] = max(steal, skip)
+	memo[begin] = max(steal, skip)
 
 	// 返回两种偷取方案种的最大值
-	return (*memo)[begin]
+	return memo[begin]
 }
 
 // 暴力搜索 (超时)

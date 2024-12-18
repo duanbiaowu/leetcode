@@ -4,11 +4,16 @@ package leetcode
 // 2. 字典中的单词可以重复使用
 // 如果没有这两个条件，需要 backtrack
 func wordBreak(s string, wordDict []string) bool {
+	// 首先构建字典的 Set, 便于快速查找
 	set := make(map[string]struct{})
 	for i := range wordDict {
 		set[wordDict[i]] = struct{}{}
 	}
 
+	// 初始化动态规划状态转移数组
+	// 状态表达式: dp[i] = dp[j] && check(s[j : i])
+	// 其中，dp[i] 表示字符串 s[0 : i-1] 是否存在于字典中
+	// check(s[j : i]) 表示子字符串 s[j : i] 是否存在于字典中
 	n := len(s)
 	dp := make([]bool, n+1)
 	dp[0] = true

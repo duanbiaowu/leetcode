@@ -16,6 +16,8 @@ func searchRange(nums []int, target int) []int {
 }
 
 // 寻找目标元素插入位置
+// 针对存在重复元素的情况
+// 如果没有重复元素，直接使用标准的二分查找即可
 // 0035 原题
 func search(nums []int, target int) int {
 	low, hi := 0, len(nums)-1
