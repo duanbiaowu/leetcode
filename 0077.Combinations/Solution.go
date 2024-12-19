@@ -20,6 +20,7 @@ func backtrack(n, k, begin int, path *[]int, res *[][]int) {
 		comb := make([]int, k)
 		copy(comb, *path)
 		*res = append(*res, comb)
+		// *res = append(*res, append([]int{}, (*path)...))
 		return
 	}
 	for i := begin; i <= n; i++ {
