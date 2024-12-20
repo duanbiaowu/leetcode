@@ -18,11 +18,11 @@ func minPathSum(grid [][]int) int {
 
 	// 起点
 	dp[0][0] = grid[0][0]
-	// 上边界
+	// 左边界
 	for i := 1; i < m; i++ {
 		dp[i][0] = dp[i-1][0] + grid[i][0]
 	}
-	// 左边界
+	// 上边界
 	for j := 1; j < n; j++ {
 		dp[0][j] = dp[0][j-1] + grid[0][j]
 	}
