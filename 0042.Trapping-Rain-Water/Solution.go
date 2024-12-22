@@ -6,7 +6,7 @@ func trap(height []int) int {
 	left, right := 0, len(height)-1
 	maxLeft, maxRight := 0, 0
 
-	// 如果右端有更高的高度，积水的高度依赖于当前方向的高度（从左到右）
+	// 如果右侧有更高的高度，积水的高度依赖于当前方向的高度（从左到右）
 	// 如果左侧有更高的高度，从相反的方向（从右到左）
 	for left <= right {
 		if height[left] <= height[right] {
@@ -45,7 +45,6 @@ func trap2(height []int) int {
 		// 说明还未找到该索引对应的柱子 的右侧 “更高的柱子”
 
 		// 3. 维护单调递减性
-		// 如果当前柱子比栈定
 		// 如果当前柱子高度 大于 栈顶元素高度
 		// 说明当前单调递减性已经被破坏
 		// 那么当前元素就是 右侧 “更高的柱子”
@@ -88,7 +87,9 @@ func trap2(height []int) int {
 func trap3(height []int) int {
 	sum := 0
 	for i := range height {
-		sum += height[i]
+		if height[i] >= 0 {
+			sum += height[i]
+		}
 	}
 	volume := 0
 	level := 1

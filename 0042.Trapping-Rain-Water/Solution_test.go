@@ -26,6 +26,11 @@ func Test_trap(t *testing.T) {
 			args{[]int{4, 2, 0, 3, 2, 5}},
 			9,
 		},
+		{
+			"test-4",
+			args{[]int{-1}},
+			0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
