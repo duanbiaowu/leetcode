@@ -3,12 +3,17 @@ package leetcode
 func sortColors(nums []int) {
 	n := len(nums)
 	p := 0
+
+	// 首先分类编号为 0 的球
 	for i := 0; i < n; i++ {
 		if nums[i] == 0 {
 			nums[i], nums[p] = nums[p], nums[i]
 			p++
 		}
 	}
+
+	// 然后分类编号为 1 的球
+	// 最后剩下的就是分类编号为 2 的球
 	for i := p; i < n; i++ {
 		if nums[i] == 1 {
 			nums[i], nums[p] = nums[p], nums[i]
