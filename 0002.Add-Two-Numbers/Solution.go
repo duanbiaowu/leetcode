@@ -6,7 +6,7 @@ type ListNode struct {
 }
 
 func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	dummy := &ListNode{Val: 0}
+	dummy := &ListNode{}
 
 	num1, num2, carry := 0, 0, 0
 	cur := dummy

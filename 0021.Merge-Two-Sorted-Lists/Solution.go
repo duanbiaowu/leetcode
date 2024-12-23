@@ -6,9 +6,9 @@ type ListNode struct {
 }
 
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
-	dummy := &ListNode{Val: 0}
-	cur := dummy
+	dummy := &ListNode{}
 
+	cur := dummy
 	for l1 != nil && l2 != nil {
 		if l1.Val < l2.Val {
 			cur.Next = l1

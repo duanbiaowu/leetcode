@@ -5,6 +5,9 @@ import "github.com/duanbiaowu/leetcode/structures"
 type ListNode = structures.ListNode
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	l1 = reverse(l1)
+	l2 = reverse(l2)
+
 	dummy := &ListNode{}
 
 	n1, n2, carry := 0, 0, 0
@@ -30,5 +33,18 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		carry = (n1 + n2 + carry) / 10
 	}
 
-	return dummy.Next
+	return reverse(dummy.Next)
+}
+
+func reverse(head *ListNode) *ListNode {
+	var prev *ListNode
+
+	for head != nil {
+		next := head.Next
+		head.Next = prev
+		prev = head
+		head = next
+	}
+
+	return prev
 }

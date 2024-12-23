@@ -40,10 +40,10 @@ func Test_addTwoNumbers(t *testing.T) {
 		{
 			"test-5",
 			args{
-				structures.GenerateListNodesByArray([]int{7, 1, 6}),
-				structures.GenerateListNodesByArray([]int{5, 9, 2}),
+				structures.GenerateListNodesByArray([]int{7, 2, 4, 3}),
+				structures.GenerateListNodesByArray([]int{5, 6, 4}),
 			},
-			structures.GenerateListNodesByArray([]int{2, 1, 9}),
+			structures.GenerateListNodesByArray([]int{7, 8, 0, 7}),
 		},
 	}
 	for _, tt := range tests {
