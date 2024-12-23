@@ -1,17 +1,20 @@
 package leetcode
 
 func productExceptSelf(nums []int) []int {
-	n := len(nums)
-	left, right := 1, 1
+	res := make([]int, len(nums))
 
-	res := make([]int, n)
-	for i := 0; i < n; i++ {
-		res[i] = left
-		left *= nums[i]
+	// 从左到右计算前缀积
+	prefixSum := 1
+	for i := range nums {
+		res[i] = prefixSum
+		prefixSum *= nums[i]
 	}
-	for i := n - 1; i > 0; i-- {
-		right *= nums[i]
-		res[i-1] *= right
+
+	// 从右到左计算后缀积
+	suffixSum := 1
+	for i := len(nums) - 1; i > 0; i-- {
+		suffixSum *= nums[i]
+		res[i-1] *= suffixSum
 	}
 
 	return res
