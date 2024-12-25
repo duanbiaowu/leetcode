@@ -1,30 +1,30 @@
 package leetcode
 
 func setZeroes(matrix [][]int) {
-	n := len(matrix)
-	if n == 0 {
+	rows := len(matrix)
+	if rows == 0 {
 		return
 	}
-	m := len(matrix[0])
+	cols := len(matrix[0])
 
 	// 记录第一行和第一列是否原本包含 0
-	row0, col0 := false, false
-	for _, val := range matrix[0] {
-		if val == 0 {
-			row0 = true
+	firstRowHasZero, firstColHasZero := false, false
+	for _, col := range matrix[0] {
+		if col == 0 {
+			firstRowHasZero = true
 			break
 		}
 	}
 	for _, row := range matrix {
 		if row[0] == 0 {
-			col0 = true
+			firstColHasZero = true
 			break
 		}
 	}
 
 	// 使用其他行与列更新 第一行与第一列
-	for i := 1; i < n; i++ {
-		for j := 1; j < m; j++ {
+	for i := 1; i < rows; i++ {
+		for j := 1; j < cols; j++ {
 			if matrix[i][j] == 0 {
 				matrix[i][0] = 0
 				matrix[0][j] = 0
@@ -33,8 +33,8 @@ func setZeroes(matrix [][]int) {
 	}
 
 	// 使用第一行与第一列 更新其他行与列
-	for i := 1; i < n; i++ {
-		for j := 1; j < m; j++ {
+	for i := 1; i < rows; i++ {
+		for j := 1; j < cols; j++ {
 			if matrix[i][0] == 0 || matrix[0][j] == 0 {
 				matrix[i][j] = 0
 			}
@@ -42,14 +42,14 @@ func setZeroes(matrix [][]int) {
 	}
 
 	// 更新第一行和第一列是否原本包含 0
-	if row0 {
-		for j := 0; j < m; j++ {
-			matrix[0][j] = 0
+	if firstRowHasZero {
+		for i := 0; i < cols; i++ {
+			matrix[0][i] = 0
 		}
 	}
-	if col0 {
-		for _, row := range matrix {
-			row[0] = 0
+	if firstColHasZero {
+		for i := 0; i < rows; i++ {
+			matrix[i][0] = 0
 		}
 	}
 }

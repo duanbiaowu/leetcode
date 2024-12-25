@@ -6,54 +6,55 @@ var (
 )
 
 func orangesRotting(grid [][]int) int {
-	M := len(grid)
-	if M == 0 {
+	rows := len(grid)
+	if rows == 0 {
 		return -1
 	}
-	N := len(grid[0])
+	cols := len(grid[0])
 
 	// 使用矩阵数组索引作为队列值和 Map-key
 	// 当然，也可以使用二维数组 var queue [][2]int
 	var queue []int
 	var depth = make(map[int]int)
 
-	for i := 0; i < M; i++ {
-		for j := 0; j < N; j++ {
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
 			if grid[i][j] == 2 {
-				code := i*N + j
+				code := i*cols + j
 				queue = append(queue, code)
 				depth[code] = 0
 			}
 		}
 	}
 
-	res := 0
+	cnt := 0
+
 	for len(queue) > 0 {
 		code := queue[0]
 		queue = queue[1:]
 
 		for k := 0; k < 4; k++ {
-			x := code/N + dx[k]
-			y := code%N + dy[k]
-			if x >= 0 && x < M && y >= 0 && y < N && grid[x][y] == 1 {
+			x := code/cols + dx[k]
+			y := code%cols + dy[k]
+			if x >= 0 && x < rows && y >= 0 && y < cols && grid[x][y] == 1 {
 				grid[x][y] = 2
-				newCode := x*N + y
+				newCode := x*cols + y
 
 				queue = append(queue, newCode)
 				depth[newCode] = depth[code] + 1
-				res = depth[newCode]
+				cnt = depth[newCode]
 			}
 		}
 	}
 
 	// 检测是否还有橘子未腐烂
-	for i := 0; i < M; i++ {
-		for j := 0; j < N; j++ {
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
 			if grid[i][j] == 1 {
 				return -1
 			}
 		}
 	}
 
-	return res
+	return cnt
 }

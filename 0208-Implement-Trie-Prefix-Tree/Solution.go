@@ -52,3 +52,27 @@ func (t *Trie) StartsWith(prefix string) bool {
 	}
 	return true
 }
+
+// func (this *Trie) Search(word string) bool {
+//     node := this.searchNode(word)
+//     return node != nil && node.IsWord
+// }
+
+// func (this *Trie) StartsWith(prefix string) bool {
+//     node := this.searchNode(prefix)
+//     return node != nil
+// }
+
+func (this *Trie) searchNode(word string) *Trie {
+	parent := this
+
+	for i := range word {
+		if child, ok := parent.Children[word[i]]; ok {
+			parent = child
+		} else {
+			return nil
+		}
+	}
+
+	return parent
+}

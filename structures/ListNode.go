@@ -1,5 +1,7 @@
 package structures
 
+import "fmt"
+
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -42,4 +44,14 @@ func GenerateRandomListNodesBySlice(nums [][2]int) *RandomListNode {
 	}
 
 	return dummy.Next
+}
+
+func DumpListNode(head *ListNode) {
+	res := []int{}
+	for head != nil {
+		res = append(res, head.Val)
+		head = head.Next
+	}
+
+	fmt.Println(res)
 }

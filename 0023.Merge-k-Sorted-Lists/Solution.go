@@ -1,20 +1,19 @@
 package leetcode
 
-// ListNode Definition for singly-linked list
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import "leetcode/structures"
+
+type ListNode = structures.ListNode
 
 // simple solution
-//func mergeKLists(lists []*ListNode) *ListNode {
-//	dummy := &ListNode{0, nil}
-//	cur := dummy
-//	for _, node := range lists {
-//		cur = mergeTwoLists(cur, node)
-//	}
-//	return dummy.Next
-//}
+func mergeKListsSimple(lists []*ListNode) *ListNode {
+	var head *ListNode
+
+	for i := range lists {
+		head = mergeTwoLists(head, lists[i])
+	}
+
+	return head
+}
 
 // divide-and-merge solution
 func mergeKLists(lists []*ListNode) *ListNode {
@@ -28,6 +27,7 @@ func merge(lists []*ListNode, left, right int) *ListNode {
 	if left == right {
 		return lists[left]
 	}
+
 	mid := left + (right-left)>>1
 	return mergeTwoLists(merge(lists, left, mid), merge(lists, mid+1, right))
 }

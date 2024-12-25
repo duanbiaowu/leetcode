@@ -11,6 +11,7 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	}
 
 	cur := head
+	// 找到第 k 个节点
 	for i := 0; i < k; i++ {
 		if cur == nil {
 			return head
@@ -18,9 +19,13 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 		cur = cur.Next
 	}
 
+	// 翻转 head 到 cur 之间的链表
 	dummy := &ListNode{Next: head}
 	dummy.Next = reverse(head, cur)
+
+	// 递归翻转后面的链表
 	head.Next = reverseKGroup(cur, k)
+
 	return dummy.Next
 }
 

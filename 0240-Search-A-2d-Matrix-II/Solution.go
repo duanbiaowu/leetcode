@@ -1,19 +1,19 @@
 package leetcode
 
 func searchMatrix(matrix [][]int, target int) bool {
-	m := len(matrix)
-	if m == 0 {
+	rows := len(matrix)
+	if rows == 0 {
 		return false
 	}
 
-	i, j := 0, len(matrix[0])-1
-	for i < m && j >= 0 {
-		if matrix[i][j] == target {
+	row, col := 0, len(matrix[0])-1
+	for row < rows && col >= 0 {
+		if matrix[row][col] == target {
 			return true
-		} else if matrix[i][j] > target {
-			j--
+		} else if matrix[row][col] > target {
+			col--
 		} else {
-			i++
+			row++
 		}
 	}
 
