@@ -30,12 +30,14 @@ func copyRandomList(head *Node) *Node {
 	}
 
 	// 分离源节点和影子节点
+	// 滚动前进，将源节点和影子节点分离，每次分离一个节点
+	// 1->1'->2->2'->3->3'  ==>  1'->2'->3'
 	// 将影子节点作为最终结果返回
 	cur = head
 	clonedHead := cur.Next
 	for cur != nil && cur.Next != nil {
 		next := cur.Next
-		cur.Next = cur.Next.Next
+		cur.Next = next.Next
 		cur = next
 	}
 

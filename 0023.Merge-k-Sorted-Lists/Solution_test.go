@@ -37,32 +37,32 @@ func Test_mergeKLists(t *testing.T) {
 		{
 			"test-2",
 			args{[]*ListNode{
-				{0, nil},
+				{Val: 0, Next: nil},
 			}},
-			&ListNode{0, nil},
+			&ListNode{Val: 0, Next: nil},
 		},
 		{
 			"test-3",
 			args{[]*ListNode{
-				{0, nil},
-				{1, nil},
+				{Val: 0, Next: nil},
+				{Val: 1, Next: nil},
 			}},
 			convertArrayToListNodes([]int{0, 1}),
 		},
 		{
 			"test-4",
 			args{[]*ListNode{
-				{1, nil},
-				{0, nil},
+				{Val: 1, Next: nil},
+				{Val: 0, Next: nil},
 			}},
 			convertArrayToListNodes([]int{0, 1}),
 		},
 		{
 			"test-5",
 			args{[]*ListNode{
-				{1, nil},
-				{0, nil},
-				{2, nil},
+				{Val: 1, Next: nil},
+				{Val: 0, Next: nil},
+				{Val: 2, Next: nil},
 			}},
 			convertArrayToListNodes([]int{0, 1, 2}),
 		},

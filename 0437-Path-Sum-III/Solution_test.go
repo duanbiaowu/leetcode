@@ -1,8 +1,9 @@
 package leetcode
 
 import (
-	"github.com/duanbiaowu/leetcode/structures"
 	"testing"
+
+	"github.com/duanbiaowu/leetcode/structures"
 )
 
 func Test_pathSum(t *testing.T) {
@@ -29,6 +30,16 @@ func Test_pathSum(t *testing.T) {
 			"test-3",
 			args{structures.GenerateTreeNodesBySlice([]int{10, 5, -3, 3, 2, structures.NULL, 11, 3, -2, structures.NULL, 1}), 8},
 			3,
+		},
+		{
+			"test-4",
+			args{structures.GenerateTreeNodesBySlice([]int{1, structures.NULL, 2, structures.NULL, 3, structures.NULL, 4, structures.NULL, 5}), 3},
+			2,
+		},
+		{
+			"test-5",
+			args{structures.GenerateTreeNodesBySlice([]int{1, -2, -3}), -1},
+			1,
 		},
 	}
 	for _, tt := range tests {

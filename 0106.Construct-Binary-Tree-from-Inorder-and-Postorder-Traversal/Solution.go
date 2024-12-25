@@ -23,6 +23,8 @@ func buildTree(inorder []int, postorder []int) *TreeNode {
 			// 左半部分就是左子树的所有节点值
 			root.Left = buildTree(inorder[:i], postorder[:i])
 			// 右半部分就是右子树的所有节点值
+			// 因为中序遍历结果中的当前元素已经作为本轮递归返回的根节点
+			// 所以这里 inorder 的索引需要加 1 作为右子树的参数
 			root.Right = buildTree(inorder[i+1:], postorder[i:])
 		}
 	}

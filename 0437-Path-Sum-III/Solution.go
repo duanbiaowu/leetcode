@@ -1,6 +1,8 @@
 package leetcode
 
-import "github.com/duanbiaowu/leetcode/structures"
+import (
+	"github.com/duanbiaowu/leetcode/structures"
+)
 
 // TreeNode Definition for a binary tree node.
 type TreeNode = structures.TreeNode
@@ -31,23 +33,31 @@ func rootSum(root *TreeNode, targetSum int) int {
 
 // 前缀和
 func pathSum2(root *TreeNode, targetSum int) int {
-	res := 0
 	preSum := make(map[int]int)
+	// 重点: 初始化前缀和为 0 的路径为 1
+	// 针对某个节点的前缀和为 sum
+	// 如果存在一个前缀和为 sum - targetSum 的路径，那么这个路径的和就是 targetSum
 	preSum[0] = 1
 
+	cnt := 0
+
 	var dfs func(*TreeNode, int)
-	dfs = func(root *TreeNode, cnt int) {
+	dfs = func(root *TreeNode, sum int) {
 		if root == nil {
 			return
 		}
-		cnt += root.Val
-		res += preSum[cnt-targetSum]
-		preSum[cnt]++
-		dfs(root.Left, cnt)
-		dfs(root.Right, cnt)
-		preSum[cnt]--
+
+		sum += root.Val
+		cnt += preSum[sum-targetSum]
+		preSum[sum]++
+
+		dfs(root.Left, sum)
+		dfs(root.Right, sum)
+
+		preSum[sum]--
 	}
 
 	dfs(root, 0)
-	return res
+
+	return cnt
 }
