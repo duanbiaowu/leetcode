@@ -15,12 +15,14 @@ func search(nums []int, target int) int {
 
 		// 通过区间左右两端的数字来确认该区间是否有序
 		if nums[low] <= nums[mid] {
+			// 注意: target < nums[mid]
 			if nums[low] <= target && target < nums[mid] {
 				hi = mid - 1
 			} else {
 				low = mid + 1
 			}
 		} else {
+			// 注意: nums[mid] < target
 			if nums[mid] < target && target <= nums[hi] {
 				low = mid + 1
 			} else {

@@ -45,25 +45,34 @@ import (
 // 二分查找
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	n := len(nums1) + len(nums2)
+
+	// 如果数组长度为偶数
+	// 中位数 = nums 中间的两个值的平均值
 	if n&1 == 0 {
 		mid := n >> 1
-		return float64(getKthElement(nums1, nums2, mid)+getKthElement(nums1, nums2, mid+1)) / 2
+		nums1Mid := getKthElement(nums1, nums2, mid)
+		nums2Mid := getKthElement(nums1, nums2, mid+1)
+
+		return float64(nums1Mid+nums2Mid) / 2
 	}
+
+	// 如果数组长度为奇数
+	// 中位数 = nums 中间值
 	return float64(getKthElement(nums1, nums2, n>>1+1))
 }
 
 func getKthElement(nums1, nums2 []int, k int) int {
-	m, n := len(nums1), len(nums2)
-	if k == 0 || (m == 0 && n == 0) {
+	nums1Len, nums2Len := len(nums1), len(nums2)
+	if k == 0 || (nums1Len == 0 && nums2Len == 0) {
 		return 0
 	}
 
 	i, j := 0, 0
 	for {
-		if i == m {
+		if i == nums1Len {
 			return nums2[j+k-1]
 		}
-		if j == n {
+		if j == nums2Len {
 			return nums1[i+k-1]
 		}
 		if k == 1 {
@@ -71,8 +80,8 @@ func getKthElement(nums1, nums2 []int, k int) int {
 		}
 
 		mid := k >> 1
-		newI := min(i+mid, m) - 1
-		newJ := min(j+mid, n) - 1
+		newI := min(i+mid, nums1Len) - 1
+		newJ := min(j+mid, nums2Len) - 1
 
 		if nums1[newI] <= nums2[newJ] {
 			k -= newI - i + 1
