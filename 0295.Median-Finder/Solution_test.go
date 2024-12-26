@@ -1,57 +1,36 @@
 package leetcode
 
-import "testing"
+import (
+	"testing"
+)
 
-func Test_rob(t *testing.T) {
-	type args struct {
-		nums []int
+func TestMedianFinder(t *testing.T) {
+	mf := Constructor()
+
+	mf.AddNum(1)
+
+	if val := mf.FindMedian(); val != 1 {
+		t.Errorf("maximalRectangle() = %v, want %v", val, 1)
 	}
-	tests := []struct {
-		name string
-		args args
-		want int
-	}{
-		{
-			"test-1",
-			args{[]int{0}},
-			0,
-		},
-		{
-			"test-2",
-			args{[]int{1}},
-			1,
-		},
-		{
-			"test-3",
-			args{[]int{1, 2}},
-			2,
-		},
-		{
-			"test-4",
-			args{[]int{1, 2, 3}},
-			4,
-		},
-		{
-			"test-5",
-			args{[]int{1, 2, 3, 4}},
-			6,
-		},
-		{
-			"test-6",
-			args{[]int{2, 7, 9, 3, 1}},
-			12,
-		},
-		{
-			"test-7",
-			args{[]int{2, 1}},
-			2,
-		},
+
+	mf.AddNum(3)
+	if val := mf.FindMedian(); val != 2 {
+		t.Errorf("maximalRectangle() = %v, want %v", val, 2)
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := rob(tt.args.nums); got != tt.want {
-				t.Errorf("rob() = %v, want %v", got, tt.want)
-			}
-		})
+
+	mf.AddNum(2)
+	if val := mf.FindMedian(); val != 2 {
+		t.Errorf("maximalRectangle() = %v, want %v", val, 2)
+	}
+
+	mf.AddNum(99)
+	mf.AddNum(99)
+	mf.AddNum(99)
+	mf.AddNum(100)
+	mf.AddNum(100)
+	mf.AddNum(100)
+
+	if val := mf.FindMedian(); val != 99 {
+		t.Errorf("maximalRectangle() = %v, want %v", val, 99)
 	}
 }
