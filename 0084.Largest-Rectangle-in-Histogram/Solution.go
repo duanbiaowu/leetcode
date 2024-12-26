@@ -38,9 +38,10 @@ func largestRectangleArea2(heights []int) int {
 		return 0
 	}
 
-	var stack []int
 	res := 0
 
+	// 单调递增栈
+	var stack []int
 	// i <= n [极端情况下，阶梯形状矩形]
 	for i := 0; i <= n; i++ {
 		var cur int
@@ -51,19 +52,65 @@ func largestRectangleArea2(heights []int) int {
 		}
 
 		// 当前高度小于栈内元素，则将栈内元素逐个弹出计算面积
+		// 也就是递增栈被破坏了
 		for len(stack) > 0 && cur < heights[stack[len(stack)-1]] {
-			pop := stack[len(stack)-1]
+			top := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
-			h := heights[pop]
+
+			// 栈顶元素为矩形高度
+			h := heights[top]
+			// 先以当前元素索引为宽度
+			// Example: [2, 1, 5, 6, 2, 3]
+			// 当 i = 1 时，h = 2, w = 1, area = 2
 			w := i
+
+			// 如果栈不为空，更新宽度为: 当前元素索引 - 比栈顶元素更小的元素索引 - 1
 			if len(stack) > 0 {
-				top := stack[len(stack)-1]
-				w = i - top - 1
+				w = i - stack[len(stack)-1] - 1
 			}
+
 			res = max(res, h*w)
 		}
+
 		stack = append(stack, i)
 	}
+
+	return res
+}
+
+func largestRectangleArea3(heights []int) int {
+	res := 0
+	stack := []int{-1}
+
+	for i := range heights {
+		for len(stack) != 1 && heights[i] < heights[stack[len(stack)-1]] {
+			// 矩形高度 = 栈顶元素高度
+			h := heights[stack[len(stack)-1]]
+			stack = stack[:len(stack)-1]
+
+			// 矩形宽度 = 当前元素索引 - 比栈顶元素次小的元素索引 - 1
+			w := i - stack[len(stack)-1] - 1
+			res = max(res, h*w)
+		}
+
+		stack = append(stack, i)
+	}
+
+	// 如果栈内还有元素，继续计算面积
+	// 因为栈内元素是递增的，所以栈内元素的右边界都是数组长度
+	// 主要针对极端场景: 阶梯形状矩形, 递增栈不会被破坏
+	// Example: [1, 2, 3, 4, 5, 6, 7]
+	for len(stack) != 1 {
+		// 矩形高度 = 栈顶元素高度
+		h := heights[stack[len(stack)-1]]
+		stack = stack[:len(stack)-1]
+
+		// 矩形宽度 = 数组长度 - 比栈顶元素次小的元素索引 - 1
+		// 相当于一个已排序数组，从后向前遍历计算 “后缀和“
+		w := len(heights) - stack[len(stack)-1] - 1
+		res = max(res, h*w)
+	}
+
 	return res
 }
 
@@ -72,4 +119,8 @@ func max(x, y int) int {
 		return x
 	}
 	return y
+}
+
+func LargestRectangleArea(heights []int) int {
+	return largestRectangleArea3(heights)
 }

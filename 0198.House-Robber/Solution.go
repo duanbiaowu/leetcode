@@ -3,7 +3,7 @@ package leetcode
 func rob(nums []int) int {
 	n := len(nums)
 	if n == 0 {
-		return 1
+		return 0
 	}
 	if n == 1 {
 		return nums[0]
@@ -19,7 +19,7 @@ func rob(nums []int) int {
 	return dp[n-1]
 }
 
-// 优化DP数组为两个变量: 类似于 Fib数列
+// 优化 DP 数组为两个变量: 类似于 Fib 数列
 func rob2(nums []int) int {
 	n := len(nums)
 	if n == 0 {
