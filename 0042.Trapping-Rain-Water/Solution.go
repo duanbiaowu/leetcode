@@ -107,6 +107,42 @@ func trap3(height []int) int {
 	return volume - sum
 }
 
+// 将栈操作独立为小的方法
+// 使单调栈核心代码更加清晰化
+func trapClarify(height []int) int {
+	sum := 0
+
+	var stack []int
+	for i, v := range height {
+		for len(stack) > 0 && v > height[peek(stack)] {
+			top := pop(&stack)
+
+			if len(stack) > 0 {
+				left := peek(stack)
+
+				w := i - left - 1
+				h := min(height[i], height[left]) - height[top]
+
+				sum += w * h
+			}
+		}
+
+		stack = append(stack, i)
+	}
+
+	return sum
+}
+
+func peek(stack []int) int {
+	return stack[len(stack)-1]
+}
+
+func pop(stack *[]int) int {
+	val := peek(*stack)
+	*stack = (*stack)[:len(*stack)-1]
+	return val
+}
+
 func min(x, y int) int {
 	if x < y {
 		return x
