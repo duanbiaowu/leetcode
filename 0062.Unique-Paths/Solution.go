@@ -9,11 +9,11 @@ func uniquePaths(m int, n int) int {
 	dp := make([][]int, m)
 	for i := 0; i < m; i++ {
 		dp[i] = make([]int, n)
-		// 不能往左走
+		// 第一列，不能继续向左走了
 		dp[i][0] = 1
 	}
 	for j := 0; j < n; j++ {
-		// 不能往上走
+		// 第一行，不能继续向上走了
 		dp[0][j] = 1
 	}
 	for i := 1; i < m; i++ {

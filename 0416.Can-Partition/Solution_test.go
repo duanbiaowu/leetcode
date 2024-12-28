@@ -30,11 +30,11 @@ func Test_canPartition(t *testing.T) {
 			[]int{1, 5, 11, 5},
 			true,
 		},
-		// {
-		// 	"test-5",
-		// 	[]int{1, 2, 3, 5},
-		// 	false,
-		// },
+		{
+			"test-5",
+			[]int{1, 2, 3, 5},
+			false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
