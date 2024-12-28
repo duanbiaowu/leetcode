@@ -6,8 +6,8 @@ package leetcode
 func wordBreak(s string, wordDict []string) bool {
 	// 首先构建字典的 Set, 便于快速查找
 	set := make(map[string]struct{})
-	for i := range wordDict {
-		set[wordDict[i]] = struct{}{}
+	for _, word := range wordDict {
+		set[word] = struct{}{}
 	}
 
 	// 初始化动态规划状态转移数组
@@ -16,6 +16,8 @@ func wordBreak(s string, wordDict []string) bool {
 	// check(s[j : i]) 表示子字符串 s[j : i] 是否存在于字典中
 	n := len(s)
 	dp := make([]bool, n+1)
+
+	// 空字符串可以直接构建
 	dp[0] = true
 
 	for i := 1; i <= n; i++ {

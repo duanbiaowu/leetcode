@@ -1,22 +1,23 @@
 package leetcode
 
 func minWindow(s string, t string) string {
-	m, n := len(s), len(t)
-	if m == 0 || n == 0 {
+	sLen, tLen := len(s), len(t)
+	if sLen == 0 || tLen == 0 {
 		return ""
 	}
 
+	// s 和 t 由英文字母组成
 	need := [128]int{}
-	for i := 0; i < n; i++ {
+	for i := 0; i < tLen; i++ {
 		need[t[i]]++
 	}
 
-	cnt := n
-	// m 设定为一个不可能的值
-	start, size := 0, m+1
-	left, right := 0, 0
+	cnt := tLen
+	// size 初始化设定为一个不可能的值
+	start, size := 0, sLen+1
 
-	for right < m {
+	left, right := 0, 0
+	for right < sLen {
 		if need[s[right]] > 0 {
 			cnt--
 		}
@@ -41,8 +42,9 @@ func minWindow(s string, t string) string {
 		right++
 	}
 
-	if size == m+1 {
+	if size == sLen+1 {
 		return ""
 	}
+
 	return s[start : start+size]
 }
