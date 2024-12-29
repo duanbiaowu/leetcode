@@ -16,17 +16,19 @@ func jump(nums []int) int {
 }
 
 func jump2(nums []int) int {
-	position := len(nums) - 1
+	pos := len(nums) - 1
 	steps := 0
-	for position > 0 {
-		for i := 0; i < position; i++ {
-			if i+nums[i] >= position {
-				position = i
+
+	for pos > 0 {
+		for i := 0; i < pos; i++ {
+			if i+nums[i] >= pos {
+				pos = i
 				steps++
 				break
 			}
 		}
 	}
+
 	return steps
 }
 
