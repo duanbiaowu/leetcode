@@ -6,28 +6,33 @@ func generateParenthesisSimple(n int) []string {
 		return []string{}
 	}
 
+	path := make([]byte, n<<1)
 	var res []string
-	generateAll(make([]byte, n<<1), 0, &res)
+
+	generateAll(0, path, &res)
+
 	return res
 }
 
-func generateAll(parenthesis []byte, index int, res *[]string) {
-	if index == len(parenthesis) {
-		if isValid(parenthesis) {
-			*res = append(*res, string(parenthesis))
+func generateAll(start int, path []byte, res *[]string) {
+	if start == len(path) {
+		if isValid(path) {
+			*res = append(*res, string(path))
 		}
 		return
 	}
 
-	parenthesis[index] = '('
-	generateAll(parenthesis, index+1, res)
-	parenthesis[index] = ')'
-	generateAll(parenthesis, index+1, res)
+	path[start] = '('
+	generateAll(start+1, path, res)
+	path[start] = ')'
+	generateAll(start+1, path, res)
 }
 
-func isValid(current []byte) bool {
+// 检测字符 `(` 和 `)` 数量是否匹配
+func isValid(path []byte) bool {
 	balance := 0
-	for _, c := range current {
+
+	for _, c := range path {
 		if c == '(' {
 			balance++
 		} else {
@@ -37,6 +42,7 @@ func isValid(current []byte) bool {
 			return false
 		}
 	}
+
 	return balance == 0
 }
 
@@ -56,10 +62,33 @@ func backtrack(left, right int, str string, res *[]string) {
 		*res = append(*res, str)
 		return
 	}
+
+	// 下一个字符使用 (
 	if left > 0 {
 		backtrack(left-1, right, str+"(", res)
 	}
+	// 下一个字符使用 )
 	if right > 0 && right > left {
 		backtrack(left, right-1, str+")", res)
+	}
+}
+
+// backtrack2(0, 0, n, path, &res)
+func backtrack2(open, close, n int, path []byte, res *[]string) {
+	if len(path) == n<<1 {
+		*res = append(*res, string(path))
+		return
+	}
+
+	if open < n {
+		path = append(path, '(')
+		backtrack2(open+1, close, n, path, res)
+		path = path[:len(path)-1]
+	}
+
+	if close < open {
+		path = append(path, ')')
+		backtrack2(open, close+1, n, path, res)
+		path = path[:len(path)-1]
 	}
 }

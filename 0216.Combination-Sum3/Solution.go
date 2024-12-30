@@ -1,5 +1,7 @@
 package leetcode
 
+import leetcode "leetcode/0040.Combination-Sum-II"
+
 func combinationSum3(k int, n int) [][]int {
 	var res [][]int
 	var path []int
@@ -30,6 +32,28 @@ func combinationSum3(k int, n int) [][]int {
 	}
 
 	backtrack(1, n)
+
+	return res
+}
+
+// 也可以直接复用 combinationSum2 方法
+// 首先计算出数字 1 - 9 的所有 sum 等于 n 组合
+// 然后过滤掉长度不等于 k 的子集
+func combinationSum3Simple(k int, n int) [][]int {
+	nums := make([]int, 9)
+	for i := range nums {
+		nums[i] = i + 1
+	}
+
+	list := leetcode.CombinationSum2(nums, n)
+
+	var res [][]int
+
+	for _, row := range list {
+		if len(row) == k {
+			res = append(res, row)
+		}
+	}
 
 	return res
 }

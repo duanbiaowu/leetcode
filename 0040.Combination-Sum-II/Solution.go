@@ -36,3 +36,7 @@ func backtrack(candidates []int, target, begin int, path *[]int, res *[][]int) {
 		*path = (*path)[:len(*path)-1]
 	}
 }
+
+func CombinationSum2(candidates []int, target int) [][]int {
+	return combinationSum2(candidates, target)
+}
