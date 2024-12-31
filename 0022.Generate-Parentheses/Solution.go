@@ -80,12 +80,14 @@ func backtrack2(open, close, n int, path []byte, res *[]string) {
 		return
 	}
 
+	// 下一个字符使用 (
 	if open < n {
 		path = append(path, '(')
 		backtrack2(open+1, close, n, path, res)
 		path = path[:len(path)-1]
 	}
 
+	// 下一个字符使用 )
 	if close < open {
 		path = append(path, ')')
 		backtrack2(open, close+1, n, path, res)
