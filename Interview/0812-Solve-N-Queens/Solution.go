@@ -89,6 +89,7 @@ func backtrack(n, start int, grid [][]byte, cols, dgs, udgs []bool, res *[][]str
 }
 
 // 题解 2
+// Reference: https://leetcode.cn/problems/n-queens/solutions/398929/nhuang-hou-by-leetcode-solution
 // 因为每个皇后必须位于不同的行和列
 // 所以当 N 个皇后放在棋盘上面时，每个皇后必须满足下面 3 个条件约束:
 //
@@ -104,6 +105,13 @@ func backtrack(n, start int, grid [][]byte, cols, dgs, udgs []bool, res *[][]str
 // 为了降低总的时间复杂度，理想情况下，可以使用 O(1) 的时间复杂度来判断当前位置是否可以放置一个皇后
 // 而为了实现这个时间复杂度，可以使用 3 个 Set 集合存储已经放置的皇后的 列、主对角线、副对角线
 
+// 下面是一个 4 * 4 的棋盘示例图:
+//    0   1   2   3
+// 0  .   .   .   .
+// 1  .   .   .   .
+// 2  .   .   .   .
+// 3  .   .   .   .
+
 func solveNQueens2(n int) [][]string {
 	if n < 1 {
 		return nil
@@ -115,12 +123,43 @@ func solveNQueens2(n int) [][]string {
 		queens[i] = -1
 	}
 
-	// 3 个 Set 集合如下
+	// 3 个 Set 集合如下:
 	// 表示每一列是否存在皇后
+	// 例如下面的棋盘中，每一列只有一个皇后
+	//    0   1   2   3
+	// 0  Q   .   .   .
+	// 1  .   Q   .   .
+	// 2  .   .   Q   .
+	// 3  .   .   .   Q
+
 	columns := make(map[int]bool)
-	// 表示主对角线是否存在皇后
+
+	// 表示主对角线 (左上到右下) 是否存在皇后
+	// 如何表示主对角线的坐标呢？
+	// 每一条主对角斜线的 行下标和列下标的差 是相等的
+
+	// 例如下面的棋盘中，主对角线的坐标差值等于 0
+	// 4 个坐标 (0, 0), (1, 1), (2, 2), (3, 3)
+
+	//    0   1   2   3
+	// 0  Q   .   .   .
+	// 1  .   Q   .   .
+	// 2  .   .   Q   .
+	// 3  .   .   .   Q
 	dgs := make(map[int]bool)
-	// 表示副对角线是否存在皇后
+
+	// 表示副对角线 (右上到左下) 是否存在皇后
+	// 如何表示副对角线的坐标呢？
+	// 每一条主对角斜线的 行下标和列下标的和 是相等的
+
+	// 例如下面的棋盘中，副对角线的坐标和等于 3
+	// 4 个坐标 (0, 3), (1, 2), (2, 1), (3, 0)
+
+	//    0   1   2   3
+	// 0  .   .   .   Q
+	// 1  .   .   Q   .
+	// 2  .   Q   .   .
+	// 3  Q   .   .   .
 	dgs2 := make(map[int]bool)
 
 	var res [][]string
@@ -131,7 +170,7 @@ func solveNQueens2(n int) [][]string {
 }
 
 func backtrack2(n, row int, queens []int, cols, dgs, dgs2 map[int]bool, res *[][]string) {
-	// 回溯终止条件
+	// 回溯终止条件: 当前行数等于参数 N (皇后的目标个数)
 	// 将当前各个皇后的位置渲染为棋盘字符串格式，然后加入到结果集合中
 	if row == n {
 		*res = append(*res, generateBoard(queens, n))
@@ -139,13 +178,20 @@ func backtrack2(n, row int, queens []int, cols, dgs, dgs2 map[int]bool, res *[][
 	}
 
 	// 尝试在当前行的每一列放置一个皇后
+	// 由于每个皇后必须位于不同的列，所以:
+	//    第一个皇后有 N 列可以选择
+	//    第二个皇后有 N-1 列可以选择
+	//    ... 以此类推
+	//    最后所有可能的情况不会超过 N！种，因此时间复杂度是 O(N!)
 	for i := 0; i < n; i++ {
 		// 剪枝策略
+		// 确保新放置的皇后不会和已经放置的皇后冲突
 		if cols[i] || dgs[row-i] || dgs2[row+i] {
 			continue
 		}
 
 		// 放置一个皇后
+		// 更新当前皇后所在行对应的列，以及对应的主/副对角线信息
 		queens[row] = i
 		cols[i], dgs[row-i], dgs2[row+i] = true, true, true
 
