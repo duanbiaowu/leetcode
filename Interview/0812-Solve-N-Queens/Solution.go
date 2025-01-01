@@ -1,5 +1,16 @@
 package leetcode
 
+// 概述
+// N 皇后问题 研究的是如何将 N 个皇后放置在 N×N 的棋盘上，并且使皇后彼此之间不能相互攻击。
+// 皇后的走法是：可以横直斜走，格数不限。因此要求皇后彼此之间不能相互攻击，
+// 等价于要求任何两个皇后都不能在同一行、同一列以及同一条斜线上。
+// 显而易见，暴力解法的思路就是枚举所有坐标，然后判断是否符合条件。
+// 具体来说，先讲第一个皇后放在第一行第一列，然后放第二个皇后，判断是否符合条件，不符合就回溯。
+// 暴力算法核心: 将 N 个皇后放置在 N×N 的棋盘上的所有可能的情况，
+//	  并对每一种情况判断是否满足皇后彼此之间不相互攻击。
+// 暴力枚举的时间复杂度是非常高的，因此必须利用限制条件加以优化。
+
+// 题解 1
 // reference: https://leetcode-cn.com/problems/eight-queens-lcci/comments/1392929
 // N 皇后在 N × N 棋盘上的各种摆法，
 // 其中每个皇后都不同行、不同列，也不在对角线上。
@@ -75,4 +86,94 @@ func backtrack(n, start int, grid [][]byte, cols, dgs, udgs []bool, res *[][]str
 			udgs[start+i] = false
 		}
 	}
+}
+
+// 题解 2
+// 因为每个皇后必须位于不同的行和列
+// 所以当 N 个皇后放在棋盘上面时，每个皇后必须满足下面 3 个条件约束:
+//
+//	每一行只有 1 个皇后
+//	每一列只有 1 个皇后
+//	每一条对角线只有 1 个皇后 (包括左上到右下的对角线，和右上到左下的对角线)
+//
+// 为了满足这些约束条件，可以使用回溯算法依次尝试每一个坐标，最后得出每个皇后的位置
+// 单个回溯过程的终止条件 == 当前行数等于 N 时，说明所有皇后都已经放置完毕
+
+// 但同时，回溯 (暴力枚举) 的时间复杂度是非常高的，因此必须利用限制条件加以优化。
+// 剪枝策略 == 当前放置的皇后位置，不能在同一列、同一条对角线上
+// 为了降低总的时间复杂度，理想情况下，可以使用 O(1) 的时间复杂度来判断当前位置是否可以放置一个皇后
+// 而为了实现这个时间复杂度，可以使用 3 个 Set 集合存储已经放置的皇后的 列、主对角线、副对角线
+
+func solveNQueens2(n int) [][]string {
+	if n < 1 {
+		return nil
+	}
+
+	// 表示每个皇后在每一行的具体位置
+	queens := make([]int, n)
+	for i := range queens {
+		queens[i] = -1
+	}
+
+	// 3 个 Set 集合如下
+	// 表示每一列是否存在皇后
+	columns := make(map[int]bool)
+	// 表示主对角线是否存在皇后
+	dgs := make(map[int]bool)
+	// 表示副对角线是否存在皇后
+	dgs2 := make(map[int]bool)
+
+	var res [][]string
+
+	backtrack2(n, 0, queens, columns, dgs, dgs2, &res)
+
+	return res
+}
+
+func backtrack2(n, row int, queens []int, cols, dgs, dgs2 map[int]bool, res *[][]string) {
+	// 回溯终止条件
+	// 将当前各个皇后的位置渲染为棋盘字符串格式，然后加入到结果集合中
+	if row == n {
+		*res = append(*res, generateBoard(queens, n))
+		return
+	}
+
+	// 尝试在当前行的每一列放置一个皇后
+	for i := 0; i < n; i++ {
+		// 剪枝策略
+		if cols[i] || dgs[row-i] || dgs2[row+i] {
+			continue
+		}
+
+		// 放置一个皇后
+		queens[row] = i
+		cols[i], dgs[row-i], dgs2[row+i] = true, true, true
+
+		// 继续放置下一个皇后，row+1 表示下一行
+		backtrack2(n, row+1, queens, cols, dgs, dgs2, res)
+
+		// 撤销当前皇后的位置，回溯到上一个状态
+		queens[row] = -1
+		cols[i], dgs[row-i], dgs2[row+i] = false, false, false
+	}
+}
+
+// 根据皇后的位置生成对应的棋盘字符串形式
+func generateBoard(queens []int, n int) []string {
+	board := []string{}
+
+	for i := 0; i < n; i++ {
+		// 每一行的固定默认样式
+		row := make([]byte, n)
+		for j := 0; j < n; j++ {
+			row[j] = '.'
+		}
+
+		// 将当前行的皇后位置设置为 'Q'
+		row[queens[i]] = 'Q'
+
+		board = append(board, string(row))
+	}
+
+	return board
 }
