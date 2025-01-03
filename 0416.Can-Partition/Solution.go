@@ -30,12 +30,13 @@ func canPartition(nums []int) bool {
 		return false
 	}
 
-	// 状态转移方程: dp[j] = dp[j] || dp[j−nums[i]]
-	// 其中 dp[j] 表示当前数字是否可以满足分割 2 个子集
+	// 状态转移方程: dp[j] = dp[j] || dp[ j−nums[i] ]
+	// 其中 dp[j] 表示对应的 target 值是否存在于子集，以满足 背包问题 的条件
 	dp := make([]bool, target+1)
 	dp[0] = true
 
 	for _, v := range nums {
+		// 内部循环退化为类似 TwoSum 问题
 		for j := target; j >= v; j-- {
 			dp[j] = dp[j] || dp[j-v]
 		}

@@ -29,7 +29,7 @@ func minimumTotal(triangle [][]int) int {
 }
 
 // 从顶部向底部迭代
-func minimumTotal2(triangle [][]int) int {
+func minimumTotalOpt(triangle [][]int) int {
 	n := len(triangle)
 	if n == 0 {
 		return 0
@@ -46,6 +46,8 @@ func minimumTotal2(triangle [][]int) int {
 		dp[0] += triangle[i][0]
 	}
 
+	// 因为 dp 存储的是最后一层的各个元素的最小路径和
+	// 所以需要从中找出最小值，这是本题区别于其他动态规划题目的细节
 	res := math.MaxInt32
 	for i := 0; i < n; i++ {
 		res = min(res, dp[i])
