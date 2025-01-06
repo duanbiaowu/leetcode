@@ -1,13 +1,16 @@
 package leetcode
 
 func isUnique(astr string) bool {
-	mark := 0
-	for _, s := range astr {
-		offset := s - 'a'
-		if mark&(1<<offset) > 0 {
+	mask := 0
+
+	for i := range astr {
+		offset := astr[i] - 'a'
+		if mask&(1<<offset) > 0 {
 			return false
 		}
-		mark |= 1 << offset
+
+		mask |= 1 << offset
 	}
+
 	return true
 }

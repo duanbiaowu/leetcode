@@ -32,6 +32,11 @@ func Test_subarraySum(t *testing.T) {
 			args{[]int{1, 2, 3}, 3},
 			2,
 		},
+		{
+			"test-5",
+			args{[]int{2, 1, 3}, 3},
+			2,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
