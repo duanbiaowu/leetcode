@@ -45,7 +45,7 @@ func dfs(root *TreeNode, depth int, res *[][]int) {
 	if root == nil {
 		return
 	}
-	if depth >= len(*res) {
+	if depth == len(*res) {
 		*res = append(*res, []int{})
 	}
 	(*res)[depth] = append((*res)[depth], root.Val)

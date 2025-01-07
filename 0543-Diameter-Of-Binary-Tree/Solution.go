@@ -11,6 +11,8 @@ func diameterOfBinaryTree(root *TreeNode) int {
 	return diameter
 }
 
+// 根据根节点计算对应的 树 的深度并返回
+// 同时在内部更新已知的最大路径值
 func dfs(root *TreeNode, diameter *int) int {
 	if root == nil {
 		return 0
