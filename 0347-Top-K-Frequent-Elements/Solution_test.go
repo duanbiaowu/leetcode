@@ -2,6 +2,7 @@ package leetcode
 
 import (
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -38,7 +39,10 @@ func Test_topKFrequent(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := topKFrequent(tt.args.nums, tt.args.k); !reflect.DeepEqual(got, tt.want) {
+			got := topKFrequentMinHeap(tt.args.nums, tt.args.k)
+			sort.Ints(got)
+
+			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("topKFrequent() = %v, want %v", got, tt.want)
 			}
 		})

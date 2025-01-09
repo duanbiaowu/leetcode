@@ -122,12 +122,16 @@ func findKthLargestWithHeap(nums []int, k int) int {
 	heapSize := n
 	buildHeap(nums, heapSize)
 
+	// 每次将堆顶元素与末尾元素交换，缩小堆的范围
 	for i := n - 1; i >= n-k+1; i-- {
+		// 堆顶元素是最大元素
 		nums[0], nums[i] = nums[i], nums[0]
 		heapSize--
+		// 调整堆
 		maxHeapify(nums, 0, heapSize)
 	}
 
+	// 此时堆顶是第 K 个最大元素
 	return nums[0]
 }
 

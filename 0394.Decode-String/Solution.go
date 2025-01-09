@@ -38,13 +38,16 @@ func decodeString(s string) string {
 			stack = stack[:top]
 		}
 
-		// 计算重复的字符串
+		// 4. 计算重复的字符串
 		repeatStr := ""
 		repeatCnt, _ := strconv.Atoi(num)
 		for i := 0; i < repeatCnt; i++ {
 			repeatStr += str
 		}
 
+		// 5. 将当前结果作为一个 “新的子字符串” 存入栈内
+		// Example: 3[a2[c]] = acc acc acc
+		// 当计算完 2[c] 后, `cc`直接存入栈内，下次就可以将 a2[c] 解析为 `acc`
 		stack = append(stack, repeatStr)
 	}
 
