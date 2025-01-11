@@ -40,6 +40,24 @@ func maxProfitDP(prices []int) int {
 
 // 每一天的状态只与前一天的状态有关，而与更早的状态都无关
 // 因此不必存储这些无关的状态
+
+// 进一步的优化:
+// profit 和 cost 两个变量，只有都为正数时才有影响结果
+// 也就是说，只有 买入成本 - 卖出收益 > 0 的时候才有必要进行操作
+// 进而可以优化到只有一个返回值变量 profit
+// func maxProfit(prices []int) int {
+//     profit := 0
+//     for i := 1; i < len(prices); i++ {
+//		   // 只要当天价格比前一天价格高，就说明存在利润
+//		   // 可以在前一天买入，当天买入即可
+//         if prices[i] > prices[i-1] {
+//             profit += prices[i] - prices[i-1]
+//         }
+//     }
+
+//     return profit
+// }
+
 func maxProfitDP2(prices []int) int {
 	n := len(prices)
 	if n == 0 {

@@ -27,16 +27,16 @@ func maxProfit2(prices []int) int {
 		return 0
 	}
 
-	max, min := 0, prices[0]
-	for i := 1; i < len(prices); i++ {
-		if prices[i] < min {
-			min = prices[i]
-		} else if prices[i]-min > max {
-			max = prices[i] - min
+	profit, cost := 0, prices[0]
+	for _, p := range prices[1:] {
+		if p < cost {
+			cost = p
+		} else if p-cost > profit {
+			profit = p - cost
 		}
 	}
 
-	return max
+	return profit
 }
 
 // 单调栈
