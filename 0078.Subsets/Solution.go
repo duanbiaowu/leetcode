@@ -35,9 +35,11 @@ func subsetsRecursively(nums []int) [][]int {
 	return res
 }
 
-func backtrack(nums []int, begin int, path []int, res *[][]int) {
+func backtrack(nums []int, start int, path []int, res *[][]int) {
+	// 无需任何剪枝
 	*res = append(*res, append([]int{}, path...))
-	for i := begin; i < len(nums); i++ {
+
+	for i := start; i < len(nums); i++ {
 		path = append(path, nums[i])
 		backtrack(nums, i+1, path, res)
 		path = path[:len(path)-1]

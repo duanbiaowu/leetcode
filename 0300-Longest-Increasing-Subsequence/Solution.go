@@ -107,7 +107,7 @@ func lengthOfLISMemo(nums []int) int {
 	//    j = 参数 cur
 	memo := make([][]int, len(nums))
 	for i := range memo {
-		memo[i] = make([]int, len(nums)+1)
+		memo[i] = make([]int, len(nums))
 		for j := range memo[i] {
 			memo[i][j] = -1
 		}

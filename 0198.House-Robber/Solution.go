@@ -23,7 +23,7 @@ func rob(nums []int) int {
 func rob2(nums []int) int {
 	n := len(nums)
 	if n == 0 {
-		return 1
+		return 0
 	}
 	if n == 1 {
 		return nums[0]

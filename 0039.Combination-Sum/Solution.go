@@ -19,7 +19,7 @@ func combinationSum(candidates []int, target int) [][]int {
 	return res
 }
 
-func backtrack(candidates []int, target, begin int, path *[]int, res *[][]int) {
+func backtrack(candidates []int, target, start int, path *[]int, res *[][]int) {
 	// 如果当前查找目标值等于 0
 	// 正好满足一个组合，将当前路径加入到结果集中
 	if target == 0 {
@@ -28,7 +28,7 @@ func backtrack(candidates []int, target, begin int, path *[]int, res *[][]int) {
 		return
 	}
 
-	for i := begin; i < len(candidates); i++ {
+	for i := start; i < len(candidates); i++ {
 		// 剪枝 (前提：已排序)
 		// 数组排序之后
 		// 如果当前元素大于目标值，那么当前元素之后的所有元素都不可能出现有效的组合了
