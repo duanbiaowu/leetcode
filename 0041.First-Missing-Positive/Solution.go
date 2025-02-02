@@ -16,9 +16,9 @@ func firstMissingPositive(nums []int) int {
 	// 将所有小于等于 n 的元素对应的位置标记为负数
 	// [1,2,4] => [-1,-2,4]
 	for i := 0; i < n; i++ {
-		num := abs(nums[i])
-		if num <= n {
-			nums[num-1] = -abs(nums[num-1])
+		index := abs(nums[i])
+		if index <= n {
+			nums[index-1] = -abs(nums[index-1])
 		}
 	}
 

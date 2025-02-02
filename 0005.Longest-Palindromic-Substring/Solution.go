@@ -172,10 +172,17 @@ func longestPalindromeDP(s string) string {
 			if s[i] != s[j] {
 				dp[i][j] = false
 			} else {
+				// 表示当前子字符串是回文串
+
 				// 边界情况, "aa" "aba" ...
 				if j-i < 3 {
 					dp[i][j] = true
 				} else {
+					// dp[i+1][j-1] 表示当前子字符串去掉 首尾字符 后的子字符串
+					// 例如 "abccbg"
+					// 其中子字符串 "bccb" 检测时，i = 1, j = 4
+					// 因为 b = b, 所以需要看 dp[i+1][j-1] 连接组合起来
+					// 也就是 "cc", 是不是同样是回文串
 					dp[i][j] = dp[i+1][j-1]
 				}
 			}
