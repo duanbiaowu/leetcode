@@ -24,7 +24,7 @@ func findWhetherExistsPath(n int, graph [][]int, start int, target int) bool {
 			if cur == target {
 				return true
 			}
-			for i, _ := range g[cur] {
+			for i := range g[cur] {
 				if !visit[i] {
 					queue = append(queue, i)
 				}
